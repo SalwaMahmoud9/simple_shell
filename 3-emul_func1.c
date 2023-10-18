@@ -11,7 +11,6 @@ int change_dir(information_struct *information)
 	char *directory, buff[1024], *x;
 
 	x = getcwd(buff, 1024);
-
 	if (!x)
 		string_print("fail msg");
 	if (!information->struct_argv[1])
@@ -27,9 +26,7 @@ int change_dir(information_struct *information)
 					chdir_var = chdir(directory);
 				}
 				else
-				{
 					chdir_var = chdir("/");
-				}
 			}
 	}
 	else if (string_compare(information->struct_argv[1], "-") == 0)
@@ -47,9 +44,7 @@ int change_dir(information_struct *information)
 			chdir_var = chdir(directory);
 		}
 		else
-		{
 			chdir_var = chdir("/");
-		}
 	}
 	else
 		chdir_var = chdir(information->struct_argv[1]);
@@ -65,7 +60,6 @@ int change_dir(information_struct *information)
 	}
 	return (0);
 }
-
 
 /**
  * alias_unset - unset alias
@@ -167,13 +161,9 @@ int alias_mimics(information_struct *information)
 	{
 		p = string_locate(information->struct_argv[i], '=');
 		if (!p)
-		{
 			alias_print(startwith_node(information->struct_als, information->struct_argv[i], '='));
-		}
 		else
-		{
 			alias_set(information, information->struct_argv[i]);
-		}
 	}
 
 	return (0);
