@@ -9,6 +9,7 @@ int change_dir(information_struct *information)
 {
 	int chdir_var;
 	char *directory, buff[1024], *x;
+
 	x = getcwd(buff, 1024);
 
 	if (!x)
@@ -18,7 +19,6 @@ int change_dir(information_struct *information)
 	if (!information->struct_argv[1])
 	{
 		directory = get_env(information, "HOME=");
-
 		if (directory)
 		{
 		    chdir_var = chdir(directory);
