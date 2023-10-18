@@ -14,7 +14,6 @@ int change_dir(information_struct *information)
 
 	if (!x)
 		string_print("fail msg");
-		
 	if (!information->struct_argv[1])
 	{
 		directory = get_env(information, "HOME=");
