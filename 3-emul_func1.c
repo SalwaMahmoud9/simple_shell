@@ -1,6 +1,41 @@
 #include "shell.h"
 
 /**
+ * change_dir - change_dir_sub1
+ * @x: input variable
+ *  Return: 1
+ */
+int change_dir_sub1(char *x)
+{
+	string_print(x);
+	string_print2('\n');
+	return (1);
+}
+
+/**
+ * change_dir_sub2 - change_dir_sub2
+ * @information: input variable
+ *  Return: void
+ */
+int change_dir_sub2(information_struct *information)
+{
+	print_err(information, "cannot go ");
+	put_estring(information->struct_argv[1]), put_echar('\n');
+}
+
+/**
+ * change_dir_sub2 - change_dir_sub3
+ * @information: input variable
+ * @buff: input variable
+ *  Return: void
+ */
+int change_dir_sub3(information_struct *information,char buff[1024])
+{
+	init_env(information, "OLDPWD", get_env(information, "PWD="));
+	init_env(information, "PWD", getcwd(buff, 1024));
+}
+
+/**
  * change_dir - change directory
  * @information: input variable
  *  Return: 0
@@ -33,9 +68,7 @@ int change_dir(information_struct *information)
 	{
 		if (!get_env(information, "OLDPWD="))
 		{
-			string_print(x);
-			string_print2('\n');
-			return (1);
+			return (change_dir_sub1(x))
 		}
 		string_print(get_env(information, "OLDPWD=")), string_print2('\n');
 		if (get_env(information, "OLDPWD="))
@@ -49,15 +82,9 @@ int change_dir(information_struct *information)
 	else
 		chdir_var = chdir(information->struct_argv[1]);
 	if (chdir_var == -1)
-	{
-		print_err(information, "cannot go ");
-		put_estring(information->struct_argv[1]), put_echar('\n');
-	}
+		change_dir_sub2(information)
 	else
-	{
-		init_env(information, "OLDPWD", get_env(information, "PWD="));
-		init_env(information, "PWD", getcwd(buff, 1024));
-	}
+		change_dir_sub3(information,buff)
 	return (0);
 }
 
