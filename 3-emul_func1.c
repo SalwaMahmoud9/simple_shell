@@ -17,20 +17,20 @@ int change_dir(information_struct *information)
 	if (!information->struct_argv[1])
 	{
 		directory = get_env(information, "HOME=");
-		if (directory)
-		    chdir_var = chdir(directory);
-		else
-		{
-			if (get_env(information, "PWD="))
-			{
-				directory = get_env(information, "PWD=");
+			if (directory)
 				chdir_var = chdir(directory);
-			}
 			else
 			{
-				chdir_var = chdir("/");
+				if (get_env(information, "PWD="))
+				{
+					directory = get_env(information, "PWD=");
+					chdir_var = chdir(directory);
+				}
+				else
+				{
+					chdir_var = chdir("/");
+				}
 			}
-		}
 	}
 	else if (string_compare(information->struct_argv[1], "-") == 0)
 	{
