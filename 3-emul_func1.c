@@ -13,16 +13,13 @@ int change_dir(information_struct *information)
 	x = getcwd(buff, 1024);
 
 	if (!x)
-	{
 		string_print("fail msg");
-	}
+		
 	if (!information->struct_argv[1])
 	{
 		directory = get_env(information, "HOME=");
 		if (directory)
-		{
 		    chdir_var = chdir(directory);
-		}
 		else
 		{
 			if (get_env(information, "PWD="))
