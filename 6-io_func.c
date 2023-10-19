@@ -85,7 +85,7 @@ char *history_get_file(information_struct *var1)
 	dir = get_env(var1, "HOME=");
 	if (!dir)
 		return (NULL);
-	var3 = malloc(sizeof(char) * 
+	var3 = malloc(sizeof(char) *
 		(string_length(dir) + string_length(HIST_F) + 2));
 	if (!var3)
 		return (NULL);
