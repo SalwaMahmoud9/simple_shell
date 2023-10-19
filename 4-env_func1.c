@@ -91,7 +91,7 @@ char *get_env(information_struct *var1, const char *name)
 	while (var3)
 	{
 		var4 = begin_with(var3->struct_str, name);
-		if (*var4 && var4)
+		if (var4 && *var4)
 			return (var4);
 		var3 = var3->struct_next;
 	}
