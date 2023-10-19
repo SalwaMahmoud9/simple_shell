@@ -138,17 +138,12 @@ int line_get(information_struct *information, char **ptr, size_t *length)
 		return (-1);
 
 	c = string_locate(buffer + i, '\n');
-	if (c)
-		k = 1 + (unsigned int)(c - buffer);
-	else
-		k = length1;
-
+	k = c ? 1 + (unsigned int)(c - buffer) : length1;
 	new_pr = memory_loc(pr, s, s ? s + k : k + 1);
 	if (!new_pr)
 		return (pr ? free(pr), -1 : -1);
 	if (!s)
 		string_copy2(new_pr, buffer + i, k - i + 1);
-
 	else
 		string_concat2(new_pr, buffer + i, k - i);
 
