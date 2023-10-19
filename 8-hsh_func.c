@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * shell_loop - shell loop
+ * hsh_func - shell loop
  * @var1: var1
  * @arg_vector: arg_vector
  *
