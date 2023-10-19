@@ -126,7 +126,8 @@ int alias_rep(information_struct *information)
 
 	for (j = 0; j <= 9; j++)
 	{
-		n = startwith_node(information->struct_als, information->struct_argv[0], '=');
+		n = startwith_node(information->struct_als
+			, information->struct_argv[0], '=');
 		if (!n)
 		{
 			check = 0;
