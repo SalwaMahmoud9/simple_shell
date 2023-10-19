@@ -49,11 +49,11 @@ int change_dir(information_struct *information)
 
 /**
  * alias_unset - unset alias
- * @information: input variable
+ * @inform: input variable
  * @s: string
  * Return: 0/1
  */
-int alias_unset(information_struct *information, char *s)
+int alias_unset(information_struct *inform, char *s)
 {
 	int r;
 	char *p;
@@ -66,7 +66,8 @@ int alias_unset(information_struct *information, char *s)
 	}
 	c = *p;
 	*p = 0;
-	r = node_delete_with_index(&(information->struct_als), node_index(information->struct_als, startwith_node(information->struct_als, s, -1)));
+	r = node_delete_with_index(&(inform->struct_als),
+		node_index(inform->struct_als, startwith_node(inform->struct_als, s, -1)));
 	*p = c;
 	return (r);
 }
