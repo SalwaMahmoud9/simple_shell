@@ -109,7 +109,7 @@ void cmd_find(information_struct *var1)
 	else
 	{
 		if ((shell_status(var1) || get_env(var1, "PATH=")
-			|| var1->struct_argv[0][0] == '/') 
+			|| var1->struct_argv[0][0] == '/')
 			&& file_status(var1, var1->struct_argv[0]))
 			cmd_f(var1);
 		else if (*(var1->struct_arg) != '\n')
