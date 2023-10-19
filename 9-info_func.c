@@ -64,7 +64,7 @@ void info_set(information_struct *information, char **vect)
 				information->struct_argv[1] = NULL;
 			}
 		}
-		for (i = 0; information->struct_argv[i] && information->struct_argv ; i++)
+		for (i = 0; information->struct_argv && information->struct_argv[i] ; i++)
 			;
 		information->struct_argc = i;
 
