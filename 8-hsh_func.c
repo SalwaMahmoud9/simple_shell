@@ -7,7 +7,7 @@
  *
  * Return: output
  */
-int shell_loop(information_struct *var1, char **arg_vector)
+int hsh_func(information_struct *var1, char **arg_vector)
 {
 	ssize_t r = 0;
 	int output = 0;

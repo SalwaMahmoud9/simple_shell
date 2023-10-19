@@ -166,7 +166,7 @@ int line_get(information_struct *, char **, size_t *);
 void handler_int(int);
 
 /* 8-hsh_func.c */
-int shell_loop(information_struct *, char **);
+int hsh_func(information_struct *, char **);
 int cmd_builtin_find(information_struct *);
 void cmd_find(information_struct *);
 void cmd_f(information_struct *);
