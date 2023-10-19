@@ -19,15 +19,7 @@ int change_dir(information_struct *information)
 			if (directory)
 				chdir_var = chdir(directory);
 			else
-			{
-				if (get_env(information, "PWD="))
-				{
-					directory = get_env(information, "PWD=");
-					chdir_var = chdir(directory);
-				}
-				else
-					chdir_var = chdir("/");
-			}
+				chdir_var = chdir((directory = get_env(information, "PWD=")) ? directory : "/");
 	}
 	else if (string_compare(information->struct_argv[1], "-") == 0)
 	{
@@ -38,13 +30,7 @@ int change_dir(information_struct *information)
 			return (1);
 		}
 		string_print(get_env(information, "OLDPWD=")), string_print2('\n');
-		if (get_env(information, "OLDPWD="))
-		{
-			directory = get_env(information, "OLDPWD=");
-			chdir_var = chdir(directory);
-		}
-		else
-			chdir_var = chdir("/");
+		chdir_var =chdir((directory = _getenv(information, "OLDPWD=")) ? directory : "/");
 	}
 	else
 		chdir_var = chdir(information->struct_argv[1]);
