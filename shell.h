@@ -186,10 +186,11 @@ char *char_duplicate(char *, int, int);
 int file_status(information_struct *, char *);
 
 /* 11-str_err_func.c */
+void put_estring(char *);
 int put_file_desc(char c, int fd);
 int put_echar(char);
 int print_file_desc(char *str, int fd);
-void put_estring(char *);
+
 
 /* string_list.c module */
 ssize_t node_index(list_struct *, list_struct *);
