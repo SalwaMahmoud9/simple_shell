@@ -86,8 +86,8 @@ typedef struct struct_information
 } information_struct;
 
 #define INFORM_INI \
-{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
-	0, 0, 0}
+{0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 0, \
+	NULL, 0, NULL, NULL}
 
 /**
  *struct builtin - builtin
