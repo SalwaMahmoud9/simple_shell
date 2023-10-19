@@ -10,9 +10,10 @@ int main(int arg_count, char **arg_vector)
 {
 
 	int file_desc = 2;
-	information_struct information[] =
-		{{0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0,
-		0, 0, NULL, 0, NULL, 0, NULL, NULL}};
+	information_struct information[] ={
+		{0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0,
+		0, 0, NULL, 0, NULL, 0, NULL, NULL}
+		};
 	int check0 = 0, check1 = 1, check2 = 2, check_1 = -1;
 
 	asm ("mov %1, %0\n\t"
