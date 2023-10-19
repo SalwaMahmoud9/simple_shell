@@ -26,12 +26,7 @@ int shell_exit(information_struct *information)
 	{
 		checkout = str_to_int(information->struct_argv[1]);
 
-		if (checkout != -1)
-		{
-			information->struct_num = str_to_int(information->struct_argv[1]);
-			return (-2);
-		}
-		else
+		if (checkout == -1)
 		{
 			information->struct_status = 2;
 			print_err(information, "Invalid No: ");
@@ -39,6 +34,8 @@ int shell_exit(information_struct *information)
 			put_echar('\n');
 			return (1);
 		}
+		information->struct_num = str_to_int(information->struct_argv[1]);
+		return (-2);
 	}
 	else
 	{

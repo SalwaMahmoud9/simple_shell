@@ -133,8 +133,6 @@ void cmd_f(information_struct *var1)
 	child_pid = fork();
 	if (child_pid == -1)
 	{
-		/* TODO: PUT ERROR FUNCTION */
-		perror("Wrong:");
 		return;
 	}
 	if (child_pid != 0)
@@ -156,6 +154,5 @@ void cmd_f(information_struct *var1)
 				exit(126);
 			exit(1);
 		}
-		/* TODO: PUT ERROR FUNCTION */
 	}
 }
