@@ -50,27 +50,25 @@ void *memory_loc(void *pr, unsigned int osize, unsigned int nsize)
 {
 	char *x;
 
-	if (osize == nsize)
+	if (!pr)
 	{
-		return (pr);
+		return (malloc(nsize));
 	}
 	if (!nsize)
 	{
 		return (free(pr), NULL);
 	}
-	if (!pr)
+	if (osize == nsize)
 	{
-		return (malloc(nsize));
+		return (pr);
 	}
+	
 	x = malloc(nsize);
 	if (!x)
 	{
 		return (NULL);
 	}
-	if (osize >= nsize)
-	{
-		osize = nsize;
-	}
+	osize = osize < nsize ? osize : nsize;
 	while (osize--)
 	{
 		x[osize] = ((char *)pr)[osize];
