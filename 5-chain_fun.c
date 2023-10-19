@@ -28,7 +28,8 @@ int vars_rep(information_struct *information)
 				string_duplicate(convert_no(getpid(), 10, 0)));
 			continue;
 		}
-		n = startwith_node(information->struct_env, &information->struct_argv[j][1], '=');
+		n = startwith_node(information->struct_env
+			, &information->struct_argv[j][1], '=');
 		if (n)
 		{
 			str_rep(&(information->struct_argv[j]),
