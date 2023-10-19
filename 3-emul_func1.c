@@ -7,7 +7,7 @@
  */
 int change_dir(information_struct *information)
 {
-	int chdir_var;
+	int chdir_v;
 	char *directory, buff[1024], *x;
 
 	x = getcwd(buff, 1024);
@@ -17,9 +17,9 @@ int change_dir(information_struct *information)
 	{
 		directory = get_env(information, "HOME=");
 			if (directory)
-				chdir_var = chdir(directory);
+				chdir_v = chdir(directory);
 			else
-				chdir_var = chdir((directory = get_env(information, "PWD=")) ? directory : "/");
+				chdir_v = chdir((directory = get_env(information, "PWD=")) ? directory : "/");
 	}
 	else if (string_compare(information->struct_argv[1], "-") == 0)
 	{
@@ -30,11 +30,11 @@ int change_dir(information_struct *information)
 			return (1);
 		}
 		string_print(get_env(information, "OLDPWD=")), string_print2('\n');
-		chdir_var =chdir((directory = _getenv(information, "OLDPWD=")) ? directory : "/");
+		chdir_v = chdir((directory = _getenv(information, "OLDPWD=")) ? directory : "/");
 	}
 	else
-		chdir_var = chdir(information->struct_argv[1]);
-	if (chdir_var == -1)
+		chdir_v = chdir(information->struct_argv[1]);
+	if (chdir_v == -1)
 	{
 		print_err(information, "cannot go ");
 		put_estring(information->struct_argv[1]), put_echar('\n');
