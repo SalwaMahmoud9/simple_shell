@@ -10,10 +10,7 @@ int main(int arg_count, char **arg_vector)
 {
 
 	int file_desc = 2;
-	information_struct information[] = {
-		{0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0,
-		0, 0, NULL, 0, NULL, 0, NULL, NULL}
-		};
+	information_struct information[] = { INFORM_INI };
 	int check0 = 0, check1 = 1, check2 = 2, check_1 = -1;
 
 	asm ("mov %1, %0\n\t"
@@ -26,6 +23,10 @@ int main(int arg_count, char **arg_vector)
 		file_desc = open(arg_vector[check1], O_RDONLY);
 		if (file_desc == check_1)
 		{
+			if (errno == EACCES)
+			{
+				exit(126);
+			}
 			if (errno == ENOENT)
 			{
 				put_estring(arg_vector[check0]);
@@ -35,10 +36,7 @@ int main(int arg_count, char **arg_vector)
 				put_echar(BUFF_F);
 				exit(127);
 			}
-			if (errno == EACCES)
-			{
-				exit(126);
-			}
+			
 			return (EXIT_FAILURE);
 		}
 		information->struct_f_r = file_desc;

@@ -85,6 +85,10 @@ typedef struct struct_information
 	char **struct_argv;
 } information_struct;
 
+#define INFORM_INI \
+{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
+	0, 0, 0}
+
 /**
  *struct builtin - builtin
  *@struct_type: struct_type
