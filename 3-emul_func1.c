@@ -125,18 +125,18 @@ int alias_print(list_struct *n)
 
 /**
  * alias_mimics - mimics alias
- * @information: input variable
+ * @inform: input variable
  *  Return: 0
  */
-int alias_mimics(information_struct *information)
+int alias_mimics(information_struct *inform)
 {
 	int i = 0;
 	list_struct *n = NULL;
 	char *p = NULL;
 
-	if (information->struct_argc == 1)
+	if (inform->struct_argc == 1)
 	{
-		n = information->struct_als;
+		n = inform->struct_als;
 		while (n)
 		{
 			alias_print(n);
@@ -144,13 +144,16 @@ int alias_mimics(information_struct *information)
 		}
 		return (0);
 	}
-	for (i = 1; information->struct_argv[i]; i++)
+	for (i = 1; inform->struct_argv[i]; i++)
 	{
-		p = string_locate(information->struct_argv[i], '=');
+		p = string_locate(inform->struct_argv[i], '=');
 		if (!p)
-			alias_print(startwith_node(information->struct_als, information->struct_argv[i], '='));
+		{
+			alias_print(startwith_node(inform->struct_als
+				, inform->struct_argv[i], '='));
+		}
 		else
-			alias_set(information, information->struct_argv[i]);
+			alias_set(inform, inform->struct_argv[i]);
 	}
 
 	return (0);
