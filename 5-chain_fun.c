@@ -50,7 +50,8 @@ int vars_rep(information_struct *information)
  * @start: start
  * @length: length
  */
-void chain_check(information_struct *information, char *buffer, size_t *pr, size_t start, size_t length)
+void chain_check(information_struct *information, char *buffer
+	, size_t *pr, size_t start, size_t length)
 {
 	size_t i = *pr;
 
