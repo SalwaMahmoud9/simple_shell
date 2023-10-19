@@ -62,7 +62,6 @@ void *memory_loc(void *pr, unsigned int osize, unsigned int nsize)
 	{
 		return (pr);
 	}
-	
 	x = malloc(nsize);
 	if (!x)
 	{
