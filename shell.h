@@ -30,7 +30,7 @@ extern char **environ;
 
 
 /**
- * struct str_linked_list
+ * str_linked_list - str_linked_list
  * @struct_no: number
  * @struct_str: string
  * @struct_next: pointer
@@ -90,7 +90,7 @@ typedef struct struct_information
 	NULL, 0, NULL, NULL}
 
 /**
- *struct builtin - builtin
+ *str_builtin - builtin
  *@struct_type: struct_type
  *@struct_function: struct_function
  */
