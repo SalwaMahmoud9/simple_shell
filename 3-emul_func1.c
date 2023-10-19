@@ -30,7 +30,7 @@ int change_dir(information_struct *information)
 			return (1);
 		}
 		string_print(get_env(information, "OLDPWD=")), string_print2('\n');
-		chdir_v = chdir((dic = _getenv(information, "OLDPWD=")) ? dic : "/");
+		chdir_v = chdir((dic = get_env(information, "OLDPWD=")) ? dic : "/");
 	}
 	else
 		chdir_v = chdir(information->struct_argv[1]);
