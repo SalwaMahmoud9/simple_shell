@@ -26,7 +26,8 @@ ssize_t buffer_read(information_struct *information, char *buffer, size_t *i)
  * @length: length
  * Return: bytes
  */
-ssize_t buffer_input(information_struct *information, char **buffer, size_t *length)
+ssize_t buffer_input(information_struct *information
+	, char **buffer, size_t *length)
 {
 
 	size_t length_pt = 0;
@@ -118,14 +119,10 @@ ssize_t input_get(information_struct *information)
  */
 int line_get(information_struct *information, char **ptr, size_t *length)
 {
-	ssize_t s = 0;
+	ssize_t s = 0, size_rr = 0;
 	size_t k;
-	ssize_t size_rr = 0;
-	char *pr = NULL;
-	char *new_pr = NULL;
-	char *c;
-	static size_t i;
-	static size_t length1;
+	char *pr = NULL, *new_pr = NULL, *c;
+	static size_t i, length1;
 	static char buffer[BUFF_R];
 
 	pr = *ptr;
