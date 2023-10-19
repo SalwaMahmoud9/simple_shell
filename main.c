@@ -36,7 +36,6 @@ int main(int arg_count, char **arg_vector)
 				put_echar(BUFF_F);
 				exit(127);
 			}
-			
 			return (EXIT_FAILURE);
 		}
 		information->struct_f_r = file_desc;
