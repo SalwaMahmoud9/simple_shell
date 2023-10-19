@@ -10,7 +10,7 @@ int main(int arg_count, char **arg_vector)
 {
 
 	int file_desc = 2;
-	information_struct information[] ={
+	information_struct information[] = {
 		{0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0,
 		0, 0, NULL, 0, NULL, 0, NULL, NULL}
 		};
