@@ -38,7 +38,7 @@ ssize_t buffer_input(information_struct *information
 		free(*buffer);
 		*buffer = NULL;
 		signal(SIGINT, handler_int);
-		size_rr = _getline(information, buffer, &length_pt)
+		size_rr = _getline(information, buffer, &length_pt);
 		if (size_rr > 0)
 		{
 			if ((*buffer)[size_rr - 1] == '\n')
