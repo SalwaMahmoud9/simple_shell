@@ -11,8 +11,7 @@ int main(int arg_count, char **arg_vector)
 
 	int file_desc = 2;
 	information_struct information[] = { INFORM_INI };
-	int check0 = 0, check1 = 1, check2 = 2, check_1 = -1;
-
+	
 	asm ("mov %1, %0\n\t"
 		"add $3, %0"
 		: "=r" (file_desc)
