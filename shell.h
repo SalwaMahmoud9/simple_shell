@@ -64,7 +64,7 @@ typedef struct str_linked_list
  *@struct_argv: struct_argv
  */
 
- typedef struct struct_information
+typedef struct struct_information
 {
 	char *struct_arg;
 	char **struct_argv;
@@ -81,8 +81,8 @@ typedef struct str_linked_list
 	int struct_change_env;
 	int struct_status;
 
-	char **struct_buff; 
-	int struct_buff_t; 
+	char **struct_buff;
+	int struct_buff_t;
 	int struct_f_r;
 	int struct_hist_c;
 } information_struct;
