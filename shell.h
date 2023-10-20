@@ -74,9 +74,9 @@ typedef struct str_linked_list
 	int struct_num;
 	int struct_count_f;
 	char *struct_f_name;
-	list_t *environ;
-	list_t *struct_his;
-	list_t *struct_als;
+	list_struct *environ;
+	list_struct *struct_his;
+	list_struct *struct_als;
 	char **struct_env_copy;
 	int struct_change_env;
 	int struct_status;
