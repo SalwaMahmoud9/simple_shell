@@ -8,13 +8,13 @@
  */
 void print_err(information_struct *var1, char *var2)
 {
-	put_estring(var1->struct_f_name);
-	put_estring(": ");
+	_put_estring(var1->struct_f_name);
+	_put_estring(": ");
 	print_dec(var1->struct_count, STDERR_FILENO);
-	put_estring(": ");
-	put_estring(var1->struct_argv[0]);
-	put_estring(": ");
-	put_estring(var2);
+	_put_estring(": ");
+	_put_estring(var1->struct_argv[0]);
+	_put_estring(": ");
+	_put_estring(var2);
 }
 
 /**
@@ -26,12 +26,12 @@ void print_err(information_struct *var1, char *var2)
  */
 int print_dec(int var1, int var2)
 {
-	int (*__putchar)(char) = string_print2;
+	int (*__putchar)(char) = _string_print2;
 	int i, count = 0;
 	unsigned int _abs_, current;
 
 	if (var2 == STDERR_FILENO)
-		__putchar = put_echar;
+		__putchar = _put_echar;
 	if (var1 < 0)
 	{
 		_abs_ = -var1;

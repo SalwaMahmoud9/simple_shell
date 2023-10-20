@@ -15,7 +15,7 @@ char *get_path(information_struct *var1, char *path, char *cmd)
 
 	if (!path)
 		return (NULL);
-	if ((string_length(cmd) > 2) && begin_with(cmd, "./"))
+	if ((_string_length(cmd) > 2) && begin_with(cmd, "./"))
 	{
 		if (file_status(var1, cmd))
 			return (cmd);
@@ -26,11 +26,11 @@ char *get_path(information_struct *var1, char *path, char *cmd)
 		{
 			var2 = char_duplicate(path, var4, i);
 			if (!*var2)
-				string_concat(var2, cmd);
+				_string_concat(var2, cmd);
 			else
 			{
-				string_concat(var2, "/");
-				string_concat(var2, cmd);
+				_string_concat(var2, "/");
+				_string_concat(var2, cmd);
 			}
 			if (file_status(var1, var2))
 				return (var2);

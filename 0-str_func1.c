@@ -15,11 +15,11 @@ char *begin_with(const char *str, const char *subStr)
 }
 
 /**
- * string_length - length of a string
+ * _string_length - length of a string
  * @str: the string
  * Return: length of string
  */
-int string_length(char *str)
+int _string_length(char *str)
 {
 	int i = 0;
 
@@ -31,12 +31,12 @@ int string_length(char *str)
 }
 
 /**
- * string_compare - comparison of two strings.
+ * _string_compare - comparison of two strings.
  * @str1: the first string
  * @str2: the second string
  * Return: -1 if str1 < str2, 1 if str1 > str2, 0 if str1 == str2
  */
-int string_compare(char *str1, char *str2)
+int _string_compare(char *str1, char *str2)
 {
 	while (*str1 && *str2)
 	{
@@ -52,11 +52,11 @@ int string_compare(char *str1, char *str2)
 }
 
 /**
- * string_duplicate - duplicates a string
+ * _string_duplicate - duplicates a string
  * @str: the string to duplicate
  * Return: pointer to the duplicated string
  */
-char *string_duplicate(const char *str)
+char *_string_duplicate(const char *str)
 {
 	int length = 0;
 	char *ret;
@@ -74,13 +74,13 @@ char *string_duplicate(const char *str)
 }
 
 /**
- * string_concat - concatenates two strings
+ * _string_concat - concatenates two strings
  * @str2: the buffer2
  * @str1: the buffer1
  *
  * Return: pointer to str2 buffer
  */
-char *string_concat(char *str2, char *str1)
+char *_string_concat(char *str2, char *str1)
 {
 	char *ret = str2;
 

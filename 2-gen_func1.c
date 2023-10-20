@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- *check_alpha - checks alphabetic character
+ *_check_alpha - checks alphabetic character
  *@c: The character
  *Return: 0 if false and 1 if true
  */
 
-int check_alpha(char c)
+int _check_alpha(char c)
 {
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 		return (1);
@@ -40,11 +40,11 @@ int shell_status(information_struct *add)
 }
 
 /**
- * str_to_int - converts string to integer
+ * _str_to_int - converts string to integer
  * @str: string
  * Return: converted number
  */
-int str_to_int(char *str)
+int _str_to_int(char *str)
 {
 	int i = 0;
 	unsigned long int output = 0;

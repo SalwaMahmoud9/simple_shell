@@ -1,48 +1,48 @@
 #include "shell.h"
 
 /**
- * change_dir - change directory
+ * _change_dir - change directory
  * @information: input variable
  *  Return: 0
  */
-int change_dir(information_struct *information)
+int _change_dir(information_struct *information)
 {
 	int chdir_v;
 	char *dic, buff[1024], *x;
 
 	x = getcwd(buff, 1024);
 	if (!x)
-		string_print("fail msg");
+		_string_print("fail msg");
 	if (!information->struct_argv[1])
 	{
-		dic = get_env(information, "HOME=");
+		dic = _get_env(information, "HOME=");
 			if (dic)
 				chdir_v = chdir(dic);
 			else
-				chdir_v = chdir((dic = get_env(information, "PWD=")) ? dic : "/");
+				chdir_v = chdir((dic = _get_env(information, "PWD=")) ? dic : "/");
 	}
-	else if (string_compare(information->struct_argv[1], "-") == 0)
+	else if (_string_compare(information->struct_argv[1], "-") == 0)
 	{
-		if (!get_env(information, "OLDPWD="))
+		if (!_get_env(information, "OLDPWD="))
 		{
-			string_print(x);
-			string_print2('\n');
+			_string_print(x);
+			_string_print2('\n');
 			return (1);
 		}
-		string_print(get_env(information, "OLDPWD=")), string_print2('\n');
-		chdir_v = chdir((dic = get_env(information, "OLDPWD=")) ? dic : "/");
+		_string_print(_get_env(information, "OLDPWD=")), _string_print2('\n');
+		chdir_v = chdir((dic = _get_env(information, "OLDPWD=")) ? dic : "/");
 	}
 	else
 		chdir_v = chdir(information->struct_argv[1]);
 	if (chdir_v == -1)
 	{
 		print_err(information, "cannot go ");
-		put_estring(information->struct_argv[1]), put_echar('\n');
+		_put_estring(information->struct_argv[1]), _put_echar('\n');
 	}
 	else
 	{
-		init_env(information, "OLDPWD", get_env(information, "PWD="));
-		init_env(information, "PWD", getcwd(buff, 1024));
+		_init_env(information, "OLDPWD", _get_env(information, "PWD="));
+		_init_env(information, "PWD", getcwd(buff, 1024));
 	}
 	return (0);
 }
@@ -59,7 +59,7 @@ int alias_unset(information_struct *inform, char *s)
 	char *p;
 	char c;
 
-	p = string_locate(s, '=');
+	p = _string_locate(s, '=');
 	if (!p)
 	{
 		return (1);
@@ -82,7 +82,7 @@ int alias_set(information_struct *information, char *s)
 {
 	char *p;
 
-	p = string_locate(s, '=');
+	p = _string_locate(s, '=');
 	if (!*++p)
 	{
 		return (alias_unset(information, s));
@@ -111,24 +111,24 @@ int alias_print(list_struct *n)
 	}
 	else
 	{
-		x = string_locate(n->struct_str, '=');
+		x = _string_locate(n->struct_str, '=');
 		for (y = n->struct_str; y <= x; y++)
 		{
-			string_print2(*y);
+			_string_print2(*y);
 		}
-		string_print2('\'');
-		string_print(x + 1);
-		string_print("'\n");
+		_string_print2('\'');
+		_string_print(x + 1);
+		_string_print("'\n");
 		return (0);
 	}
 }
 
 /**
- * alias_mimics - mimics alias
+ * _alias_mimics - mimics alias
  * @inform: input variable
  *  Return: 0
  */
-int alias_mimics(information_struct *inform)
+int _alias_mimics(information_struct *inform)
 {
 	int i = 0;
 	list_struct *n = NULL;
@@ -146,7 +146,7 @@ int alias_mimics(information_struct *inform)
 	}
 	for (i = 1; inform->struct_argv[i]; i++)
 	{
-		p = string_locate(inform->struct_argv[i], '=');
+		p = _string_locate(inform->struct_argv[i], '=');
 		if (!p)
 		{
 			alias_print(startwith_node(inform->struct_als

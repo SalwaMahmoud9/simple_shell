@@ -38,7 +38,11 @@ ssize_t buffer_input(information_struct *information
 		free(*buffer);
 		*buffer = NULL;
 		signal(SIGINT, handler_int);
+#if G_L
 		size_rr = getline(buffer, &length_pt, stdin);
+#else
+		size_rr = _getline(information, buffer, &length_pt);
+#endif
 		if (size_rr > 0)
 		{
 			if ((*buffer)[size_rr - 1] == '\n')
@@ -73,7 +77,7 @@ ssize_t input_get(information_struct *information)
 	static size_t j;
 	static size_t length;
 
-	string_print2(BUFF_F);
+	_string_print2(BUFF_F);
 	size_rr = buffer_input(information, &buffer, &length);
 	if (size_rr == -1)
 		return (size_rr);
@@ -99,7 +103,7 @@ ssize_t input_get(information_struct *information)
 		}
 
 		*buffer_pt = pr;
-		return (string_length(pr));
+		return (_string_length(pr));
 	}
 
 	*buffer_pt = buffer;
@@ -133,15 +137,15 @@ int _getline(information_struct *information, char **ptr, size_t *length)
 	if (size_rr == -1 || (size_rr == 0 && length1 == 0))
 		return (-1);
 
-	c = string_locate(buffer + i, '\n');
+	c = _string_locate(buffer + i, '\n');
 	k = c ? 1 + (unsigned int)(c - buffer) : length1;
-	new_pr = memory_loc(pr, s, s ? s + k : k + 1);
+	new_pr = _memory_loc(pr, s, s ? s + k : k + 1);
 	if (!new_pr)
 		return (pr ? free(pr), -1 : -1);
 	if (!s)
-		string_copy2(new_pr, buffer + i, k - i + 1);
+		_string_copy2(new_pr, buffer + i, k - i + 1);
 	else
-		string_concat2(new_pr, buffer + i, k - i);
+		_string_concat2(new_pr, buffer + i, k - i);
 
 	s += (k - i);
 	i = k;
@@ -159,7 +163,7 @@ int _getline(information_struct *information, char **ptr, size_t *length)
  */
 void handler_int(__attribute__((unused))int sig_num)
 {
-	string_print("\n");
-	string_print("$ ");
-	string_print2(BUFF_F);
+	_string_print("\n");
+	_string_print("$ ");
+	_string_print2(BUFF_F);
 }

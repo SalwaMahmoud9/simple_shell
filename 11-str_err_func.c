@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * put_file_desc - put file desc
+ * _put_file_desc - put file desc
  * @pc: print char
  * @filedesc: file desc
  * Return: 1/0
  */
-int put_file_desc(char pc, int filedesc)
+int _put_file_desc(char pc, int filedesc)
 {
 	static char buffer[BUFF_W];
 	static int i;
@@ -22,11 +22,11 @@ int put_file_desc(char pc, int filedesc)
 }
 
 /**
- * put_echar - put char
+ * _put_echar - put char
  * @pc: print char
  * Return: 0/1
  */
-int put_echar(char pc)
+int _put_echar(char pc)
 {
 	static char buffer[BUFF_W];
 	static int i;
@@ -41,12 +41,12 @@ int put_echar(char pc)
 	return (1);
 }
 /**
- *print_file_desc - print file desc
+ *_print_file_desc - print file desc
  * @string: string
  * @filedesc: file desc
  * Return:No of char
  */
-int print_file_desc(char *string, int filedesc)
+int _print_file_desc(char *string, int filedesc)
 {
 	int i = 0;
 
@@ -54,16 +54,16 @@ int print_file_desc(char *string, int filedesc)
 		return (i);
 	while (*string)
 	{
-		i = i + put_file_desc(*string++, filedesc);
+		i = i + _put_file_desc(*string++, filedesc);
 	}
 	return (i);
 }
 
 /**
- *put_estring - put string
+ *_put_estring - put string
  * @string: string
  */
-void put_estring(char *string)
+void _put_estring(char *string)
 {
 	int ii = 0;
 
@@ -71,7 +71,7 @@ void put_estring(char *string)
 		return;
 	while (string[ii] != '\0')
 	{
-		put_echar(string[ii]);
+		_put_echar(string[ii]);
 		ii++;
 	}
 }

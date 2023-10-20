@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- **string_locate - locates a character in a string
+ **_string_locate - locates a character in a string
  *@str: the string
  *@c: the character
  *Return: a pointer or NULL
  */
-char *string_locate(char *str, char c)
+char *_string_locate(char *str, char c)
 {
 	do {
 		if (*str == c)
@@ -17,13 +17,13 @@ char *string_locate(char *str, char c)
 }
 
 /**
- * **string_split - splits a string into words
+ * **_string_split - splits a string into words
  * @str: the input string
  * @d: the character
  * Return: a pointer to an array of strings, or NULL
  */
 
-char **string_split(char *str, char *d)
+char **_string_split(char *str, char *d)
 {
 	int i, j, k, m, numwords = 0;
 	char **ch;
@@ -64,12 +64,12 @@ char **string_split(char *str, char *d)
 }
 
 /**
- * **string_split2 - splits a string into words
+ * **_string_split2 - splits a string into words
  * @str: the input string
  * @d: the character
  * Return: a pointer to an array of strings, or NULL
  */
-char **string_split2(char *str, char d)
+char **_string_split2(char *str, char d)
 {
 	int i, j, k, m, numwords = 0;
 	char **ch;

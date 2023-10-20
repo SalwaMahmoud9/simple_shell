@@ -38,7 +38,7 @@ char **convert_lis_to_str(list_struct *h_pt)
 		return (NULL);
 	for (i = 0; n; n = n->struct_next, i++)
 	{
-		string = malloc(string_length(n->struct_str) + 1);
+		string = malloc(_string_length(n->struct_str) + 1);
 		if (!string)
 		{
 			for (j = 0; j <= i - 1; j++)
@@ -49,7 +49,7 @@ char **convert_lis_to_str(list_struct *h_pt)
 			return (NULL);
 		}
 
-		string = string_copy(string, n->struct_str);
+		string = _string_copy(string, n->struct_str);
 		strings[i] = string;
 	}
 	strings[i] = NULL;
@@ -68,11 +68,11 @@ size_t linklist_print(const list_struct *h)
 
 	while (h)
 	{
-		string_print(convert_no(h->struct_no, 10, 0));
-		string_print2(':');
-		string_print2(' ');
-		string_print(h->struct_str ? h->struct_str : "(nil)");
-		string_print("\n");
+		_string_print(convert_no(h->struct_no, 10, 0));
+		_string_print2(':');
+		_string_print2(' ');
+		_string_print(h->struct_str ? h->struct_str : "(nil)");
+		_string_print("\n");
 		h = h->struct_next;
 		i++;
 	}
@@ -120,11 +120,11 @@ list_struct *node_put(list_struct **h_pt, const char *string, int num)
 	{
 		return (NULL);
 	}
-	memory_set((void *)n_he, 0, sizeof(list_struct));
+	_memory_set((void *)n_he, 0, sizeof(list_struct));
 	n_he->struct_no = num;
 	if (string)
 	{
-		n_he->struct_str = string_duplicate(string);
+		n_he->struct_str = _string_duplicate(string);
 		if (!n_he->struct_str)
 		{
 			free(n_he);

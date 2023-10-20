@@ -40,13 +40,13 @@ void memory_free(char **ss)
 }
 
 /**
- * memory_loc - reallocate memory
+ * _memory_loc - reallocate memory
  * @pr: pointer previous malloc
  * @osize: byte previous
  * @nsize: byte new
  * Return: pointer
  */
-void *memory_loc(void *pr, unsigned int osize, unsigned int nsize)
+void *_memory_loc(void *pr, unsigned int osize, unsigned int nsize)
 {
 	char *x;
 
@@ -77,13 +77,13 @@ void *memory_loc(void *pr, unsigned int osize, unsigned int nsize)
 }
 
 /**
- **memory_set - fill memory
+ **_memory_set - fill memory
  *@pr: pointer
  *@x: byte fill *pr
  *@y: n bytes
  *Return: pointer
  */
-char *memory_set(char *pr, char x, unsigned int y)
+char *_memory_set(char *pr, char x, unsigned int y)
 {
 	unsigned int j;
 

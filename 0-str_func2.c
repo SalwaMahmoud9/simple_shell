@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- **string_concat2 - concatenates two strings
+ **_string_concat2 - concatenates two strings
  *@str2: the first string
  *@str1: the second string
  *@n: the amount of bytes
  *Return: the concatenated string
  */
-char *string_concat2(char *str2, char *str1, int n)
+char *_string_concat2(char *str2, char *str1, int n)
 {
 	int i, j;
 	char *str = str2;
@@ -28,13 +28,13 @@ char *string_concat2(char *str2, char *str1, int n)
 }
 
 /**
- * string_copy - copies a string
+ * _string_copy - copies a string
  * @str2: the str2
  * @str1: the str1
  *
  * Return: pointer to str2
  */
-char *string_copy(char *str2, char *str1)
+char *_string_copy(char *str2, char *str1)
 {
 	int i = 0;
 
@@ -50,13 +50,13 @@ char *string_copy(char *str2, char *str1)
 }
 
 /**
- **string_copy2 - copies a string
+ **_string_copy2 - copies a string
  *@str2: the str2 to be copied to
  *@str1: the str1
  *@n: the amount of characters to be copied
  *Return: the concatenated string
  */
-char *string_copy2(char *str2, char *str1, int n)
+char *_string_copy2(char *str2, char *str1, int n)
 {
 	int i, j;
 	char *str = str2;
@@ -80,12 +80,12 @@ char *string_copy2(char *str2, char *str1, int n)
 }
 
 /**
- *string_print - prints a string
+ *_string_print - prints a string
  *@str: the string to be printed
  *
  * Return: No return
  */
-void string_print(char *str)
+void _string_print(char *str)
 {
 	int i = 0;
 
@@ -93,18 +93,18 @@ void string_print(char *str)
 		return;
 	while (str[i] != '\0')
 	{
-		string_print2(str[i]);
+		_string_print2(str[i]);
 		i++;
 	}
 }
 
 /**
- * string_print2 - writes the string in stdout
+ * _string_print2 - writes the string in stdout
  * @c: The string to write
  *
  * Return: 1
  */
-int string_print2(char c)
+int _string_print2(char c)
 {
 	static int i;
 	static char buf[BUFF_W];

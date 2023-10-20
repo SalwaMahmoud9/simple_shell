@@ -25,7 +25,7 @@ void info_free(information_struct *information, int fields)
 		memory_free_pointer((void **)information->struct_buff);
 		if (information->struct_f_r > 2)
 			close(information->struct_f_r);
-		string_print2(BUFF_F);
+		_string_print2(BUFF_F);
 	}
 }
 
@@ -54,13 +54,13 @@ void info_set(information_struct *information, char **vect)
 	information->struct_f_name = vect[0];
 	if (information->struct_arg)
 	{
-		information->struct_argv = string_split(information->struct_arg, " \t");
+		information->struct_argv = _string_split(information->struct_arg, " \t");
 		if (!information->struct_argv)
 		{
 			information->struct_argv = malloc(sizeof(char *) * 2);
 			if (information->struct_argv)
 			{
-				information->struct_argv[0] = string_duplicate(information->struct_arg);
+				information->struct_argv[0] = _string_duplicate(information->struct_arg);
 				information->struct_argv[1] = NULL;
 			}
 		}

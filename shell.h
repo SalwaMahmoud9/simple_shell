@@ -63,31 +63,33 @@ typedef struct str_linked_list
  *@struct_arg: struct_arg
  *@struct_argv: struct_argv
  */
-typedef struct struct_information
+
+ typedef struct struct_information
 {
+	char *struct_arg;
+	char **struct_argv;
+	char *struct_path;
+	int struct_argc;
 	unsigned int struct_count;
 	int struct_num;
 	int struct_count_f;
 	char *struct_f_name;
-	list_struct *environ;
+	list_t *environ;
+	list_t *struct_his;
+	list_t *struct_als;
 	char **struct_env_copy;
-	list_struct *struct_als;
-	char **struct_buff;
-	int struct_buff_t;
-	int struct_f_r;
 	int struct_change_env;
 	int struct_status;
-	list_struct *struct_his;
+
+	char **struct_buff; 
+	int struct_buff_t; 
+	int struct_f_r;
 	int struct_hist_c;
-	char *struct_path;
-	int struct_argc;
-	char *struct_arg;
-	char **struct_argv;
 } information_struct;
 
-#define INFORM_INI \
-{0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 0, \
-	NULL, 0, NULL, NULL}
+#define INFO_INIT \
+{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
+	0, 0, 0}
 
 /**
  *str_builtin - builtin
@@ -104,30 +106,30 @@ typedef struct str_builtin
 /* 0-str_func.c */
 
 char *begin_with(const char *, const char *);
-int string_length(char *);
-int string_compare(char *, char *);
-char *string_duplicate(const char *);
-char *string_concat(char *, char *);
-char *string_concat2(char *, char *, int);
-char *string_copy(char *, char *);
-char *string_copy2(char *, char *, int);
-void string_print(char *);
-int string_print2(char);
-char *string_locate(char *, char);
-char **string_split(char *, char *);
-char **string_split2(char *, char);
+int _string_length(char *);
+int _string_compare(char *, char *);
+char *_string_duplicate(const char *);
+char *_string_concat(char *, char *);
+char *_string_concat2(char *, char *, int);
+char *_string_copy(char *, char *);
+char *_string_copy2(char *, char *, int);
+void _string_print(char *);
+int _string_print2(char);
+char *_string_locate(char *, char);
+char **_string_split(char *, char *);
+char **_string_split2(char *, char);
 
 /* 1-memo_func */
 int memory_free_pointer(void **);
 void memory_free(char **);
-void *memory_loc(void *, unsigned int, unsigned int);
-char *memory_set(char *, char, unsigned int);
+void *_memory_loc(void *, unsigned int, unsigned int);
+char *_memory_set(char *, char, unsigned int);
 
 /* 2-gen_func.c */
-int check_alpha(char);
+int _check_alpha(char);
 int char_delim(char, char *);
 int shell_status(information_struct *);
-int str_to_int(char *);
+int _str_to_int(char *);
 void remove_comments(char *);
 void print_err(information_struct *, char *);
 int print_dec(int, int);
@@ -135,20 +137,20 @@ char *convert_no(long int, int, int);
 int _atoi(char *);
 
 /* 3-emul_func.c */
-int change_dir(information_struct *);
-int alias_mimics(information_struct *);
-int show_history(information_struct *);
-int shell_exit(information_struct *);
+int _change_dir(information_struct *);
+int _alias_mimics(information_struct *);
+int _show_history(information_struct *);
+int _shell_exit(information_struct *);
 
 /* 4-env_func.c module */
-int init_env(information_struct *, char *, char *);
+int _init_env(information_struct *, char *, char *);
 int populate_env(information_struct *);
-int set_env(information_struct *);
-char *get_env(information_struct *, const char *);
-int unset_env(information_struct *);
+int _set_env(information_struct *);
+char *_get_env(information_struct *, const char *);
+int _unset_env(information_struct *);
 char **return_env(information_struct *);
-int remove_env(information_struct *, char *);
-int print_env(information_struct *);
+int _remove_env(information_struct *, char *);
+int _print_env(information_struct *);
 
 /* 5-chain_fun.c */
 int vars_rep(information_struct *);
@@ -186,10 +188,10 @@ char *char_duplicate(char *, int, int);
 int file_status(information_struct *, char *);
 
 /* 11-str_err_func.c */
-void put_estring(char *);
-int put_file_desc(char c, int fd);
-int put_echar(char);
-int print_file_desc(char *str, int fd);
+void _put_estring(char *);
+int _put_file_desc(char c, int fd);
+int _put_echar(char);
+int _print_file_desc(char *str, int fd);
 
 
 /* string_list.c module */

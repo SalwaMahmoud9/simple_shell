@@ -1,14 +1,14 @@
 #include "shell.h"
 
 /**
- * init_env - Initialize env
+ * _init_env - Initialize env
  * @var1: var1
  * @var: string var
  * @value: string value
  *  Return: 1,0
  */
 
-int init_env(information_struct *var1, char *var, char *value)
+int _init_env(information_struct *var1, char *var, char *value)
 {
 	char *var2 = NULL;
 	list_struct *var3;
@@ -17,12 +17,12 @@ int init_env(information_struct *var1, char *var, char *value)
 	if (!var || !value)
 		return (0);
 
-	var2 = malloc(string_length(var) + string_length(value) + 2);
+	var2 = malloc(_string_length(var) + _string_length(value) + 2);
 	if (!var2)
 		return (1);
-	string_copy(var2, var);
-	string_concat(var2, "=");
-	string_concat(var2, value);
+	_string_copy(var2, var);
+	_string_concat(var2, "=");
+	_string_concat(var2, value);
 	var3 = var1->environ;
 	while (var3)
 	{
@@ -59,31 +59,31 @@ int populate_env(information_struct *var1)
 }
 
 /**
- * set_env - set environ
+ * _set_env - set environ
  * @var1: var1
  *  Return: 1,0
  */
-int set_env(information_struct *var1)
+int _set_env(information_struct *var1)
 {
-	if (init_env(var1, var1->struct_argv[1], var1->struct_argv[2]))
+	if (_init_env(var1, var1->struct_argv[1], var1->struct_argv[2]))
 		return (0);
 
 	if (var1->struct_argc != 3)
 	{
-		put_estring("Wrong Data\n");
+		_put_estring("Wrong Data\n");
 		return (1);
 	}
 	return (1);
 }
 
 /**
- * get_env - get environ
+ * _get_env - get environ
  * @var1: contain arguments
  * @name: env var name
  *
  * Return: the value
  */
-char *get_env(information_struct *var1, const char *name)
+char *_get_env(information_struct *var1, const char *name)
 {
 	list_struct *var3 = var1->environ;
 	char *var4;

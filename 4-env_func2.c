@@ -1,21 +1,21 @@
 #include "shell.h"
 
 /**
- * unset_env - unset environ
+ * _unset_env - unset environ
  * @var1: var1
  *  Return: 1,0
  */
-int unset_env(information_struct *var1)
+int _unset_env(information_struct *var1)
 {
 	int i;
 
 	if (var1->struct_argc == 1)
 	{
-		put_estring("Wrong Data.\n");
+		_put_estring("Wrong Data.\n");
 		return (1);
 	}
 	for (i = 1; i <= var1->struct_argc; i++)
-		remove_env(var1, var1->struct_argv[i]);
+		_remove_env(var1, var1->struct_argv[i]);
 
 	return (0);
 }
@@ -38,12 +38,12 @@ char **return_env(information_struct *var1)
 }
 
 /**
- * remove_env - Remove environ
+ * _remove_env - Remove environ
  * @var1: var1
  *  Return: var1->struct_change_env, 0
  * @var: string
  */
-int remove_env(information_struct *var1, char *var)
+int _remove_env(information_struct *var1, char *var)
 {
 	list_struct *var2 = var1->environ;
 	size_t i = 0;
@@ -69,12 +69,12 @@ int remove_env(information_struct *var1, char *var)
 }
 
 /**
- * print_env - print environ
+ * _print_env - print environ
  * @var1: maintain constant function prototype.
  *
  * Return: 0
  */
-int print_env(information_struct *var1)
+int _print_env(information_struct *var1)
 {
 	strlist_print(var1->environ);
 	return (0);

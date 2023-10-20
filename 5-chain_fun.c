@@ -14,18 +14,18 @@ int vars_rep(information_struct *information)
 	for (j = 0; information->struct_argv[j]; j++)
 	{
 
-		if (!string_compare(information->struct_argv[j], "$?"))
+		if (!_string_compare(information->struct_argv[j], "$?"))
 		{
 			str_rep(&(information->struct_argv[j]),
-				string_duplicate(convert_no(information->struct_status, 10, 0)));
+				_string_duplicate(convert_no(information->struct_status, 10, 0)));
 			continue;
 		}
 		if (!information->struct_argv[j][1] || information->struct_argv[j][0] != '$')
 			continue;
-		if (!string_compare(information->struct_argv[j], "$$"))
+		if (!_string_compare(information->struct_argv[j], "$$"))
 		{
 			str_rep(&(information->struct_argv[j]),
-				string_duplicate(convert_no(getpid(), 10, 0)));
+				_string_duplicate(convert_no(getpid(), 10, 0)));
 			continue;
 		}
 		n = startwith_node(information->environ
@@ -33,10 +33,10 @@ int vars_rep(information_struct *information)
 		if (n)
 		{
 			str_rep(&(information->struct_argv[j]),
-				string_duplicate(string_locate(n->struct_str, '=') + 1));
+				_string_duplicate(_string_locate(n->struct_str, '=') + 1));
 			continue;
 		}
-		str_rep(&information->struct_argv[j], string_duplicate(""));
+		str_rep(&information->struct_argv[j], _string_duplicate(""));
 
 	}
 	return (0);
@@ -134,13 +134,13 @@ int alias_rep(information_struct *information)
 			return (check);
 		}
 		free(information->struct_argv[0]);
-		pr = string_locate(n->struct_str, '=');
+		pr = _string_locate(n->struct_str, '=');
 		if (!pr)
 		{
 			check = 0;
 			return (check);
 		}
-		pr = string_duplicate(pr + 1);
+		pr = _string_duplicate(pr + 1);
 		if (!pr)
 		{
 			check = 0;

@@ -82,17 +82,17 @@ char *history_get_file(information_struct *var1)
 {
 	char *var3, *dir;
 
-	dir = get_env(var1, "HOME=");
+	dir = _get_env(var1, "HOME=");
 	if (!dir)
 		return (NULL);
 	var3 = malloc(sizeof(char) *
-		(string_length(dir) + string_length(HIST_F) + 2));
+		(_string_length(dir) + _string_length(HIST_F) + 2));
 	if (!var3)
 		return (NULL);
 	var3[0] = 0;
-	string_copy(var3, dir);
-	string_concat(var3, "/");
-	string_concat(var3, HIST_F);
+	_string_copy(var3, dir);
+	_string_concat(var3, "/");
+	_string_concat(var3, HIST_F);
 	return (var3);
 }
 
@@ -117,10 +117,10 @@ int history_write(information_struct *var1)
 		return (-1);
 	for (var2 = var1->struct_his; var2; var2 = var2->struct_next)
 	{
-		put_file_desc('\n', fd);
-		print_file_desc(var2->struct_str, fd);
+		_put_file_desc('\n', fd);
+		_print_file_desc(var2->struct_str, fd);
 	}
-	put_file_desc(BUFF_F, fd);
+	_put_file_desc(BUFF_F, fd);
 	close(fd);
 	return (1);
 }

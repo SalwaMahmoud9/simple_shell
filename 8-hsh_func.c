@@ -16,11 +16,11 @@ int hsh(information_struct *var1, char **arg_vector)
 	{
 		init_info(var1);
 		if (shell_status(var1))
-			string_print("$ ");
-		put_echar(BUFF_F);
+			_string_print("$ ");
+		_put_echar(BUFF_F);
 		r = input_get(var1);
 		if (shell_status(var1))
-			string_print2('\n');
+			_string_print2('\n');
 		else if (r != -1)
 		{
 			info_set(var1, arg_vector);
@@ -57,18 +57,18 @@ int cmd_builtin_find(information_struct *var1)
 {
 	int i, built_in_ret = -1;
 	builtin_struct builtintbl[] = {
-		{"exit", shell_exit},
-		{"env", print_env},
-		{"history", show_history},
-		{"setenv", set_env},
-		{"unsetenv", unset_env},
-		{"cd", change_dir},
-		{"alias", alias_mimics},
+		{"exit", _shell_exit},
+		{"env", _print_env},
+		{"history", _show_history},
+		{"setenv", _set_env},
+		{"unsetenv", _unset_env},
+		{"cd", _change_dir},
+		{"alias", _alias_mimics},
 		{NULL, NULL}
 	};
 
 	for (i = 0; builtintbl[i].struct_type; i++)
-		if (string_compare(var1->struct_argv[0], builtintbl[i].struct_type) == 0)
+		if (_string_compare(var1->struct_argv[0], builtintbl[i].struct_type) == 0)
 		{
 			var1->struct_count++;
 			built_in_ret = builtintbl[i].struct_function(var1);
@@ -100,7 +100,7 @@ void cmd_find(information_struct *var1)
 	if (!k)
 		return;
 
-	path = get_path(var1, get_env(var1, "PATH="), var1->struct_argv[0]);
+	path = get_path(var1, _get_env(var1, "PATH="), var1->struct_argv[0]);
 	if (path)
 	{
 		var1->struct_path = path;
@@ -108,7 +108,7 @@ void cmd_find(information_struct *var1)
 	}
 	else
 	{
-		if ((shell_status(var1) || get_env(var1, "PATH=")
+		if ((shell_status(var1) || _get_env(var1, "PATH=")
 			|| var1->struct_argv[0][0] == '/')
 			&& file_status(var1, var1->struct_argv[0]))
 			cmd_f(var1);

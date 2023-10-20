@@ -40,11 +40,11 @@ list_struct *node_end(list_struct **h_pt, const char *string, int num)
 	new_node = malloc(sizeof(list_struct));
 	if (!new_node)
 		return (NULL);
-	memory_set((void *)new_node, 0, sizeof(list_struct));
+	_memory_set((void *)new_node, 0, sizeof(list_struct));
 	new_node->struct_no = num;
 	if (string)
 	{
-		new_node->struct_str = string_duplicate(string);
+		new_node->struct_str = _string_duplicate(string);
 		if (!new_node->struct_str)
 		{
 			free(new_node);
@@ -144,8 +144,8 @@ size_t strlist_print(const list_struct *h)
 
 	while (h)
 	{
-		string_print(h->struct_str ? h->struct_str : "(nil)");
-		string_print("\n");
+		_string_print(h->struct_str ? h->struct_str : "(nil)");
+		_string_print("\n");
 		h = h->struct_next;
 		ii++;
 	}

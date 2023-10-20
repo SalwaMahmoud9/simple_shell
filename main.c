@@ -29,11 +29,11 @@ int main(int arg_count, char **arg_vector)
 			}
 			if (errno == ENOENT)
 			{
-				put_estring(arg_vector[check0]);
-				put_estring(": 0: Cannot open ");
-				put_estring(arg_vector[check1]);
-				put_echar('\n');
-				put_echar(BUFF_F);
+				_put_estring(arg_vector[check0]);
+				_put_estring(": 0: Cannot open ");
+				_put_estring(arg_vector[check1]);
+				_put_echar('\n');
+				_put_echar(BUFF_F);
 				exit(127);
 			}
 			return (EXIT_FAILURE);
