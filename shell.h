@@ -1,8 +1,8 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -48,7 +48,7 @@ typedef struct str_linked_list
  *@struct_num: struct_num
  *@struct_count_f: struct_count_f
  *@struct_f_name: struct_f_name
- *@struct_env: struct_env
+ *@environ: environ
  *@struct_env_copy: struct_env_copy
  *@struct_als: struct_als
  *@struct_buff: struct_buff
@@ -69,7 +69,7 @@ typedef struct struct_information
 	int struct_num;
 	int struct_count_f;
 	char *struct_f_name;
-	list_struct *struct_env;
+	list_struct *environ;
 	char **struct_env_copy;
 	list_struct *struct_als;
 	char **struct_buff;

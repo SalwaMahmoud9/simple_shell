@@ -23,7 +23,7 @@ int init_env(information_struct *var1, char *var, char *value)
 	string_copy(var2, var);
 	string_concat(var2, "=");
 	string_concat(var2, value);
-	var3 = var1->struct_env;
+	var3 = var1->environ;
 	while (var3)
 	{
 		var4 = begin_with(var3->struct_str, var);
@@ -36,7 +36,7 @@ int init_env(information_struct *var1, char *var, char *value)
 		}
 		var3 = var3->struct_next;
 	}
-	node_end(&(var1->struct_env), var2, 0);
+	node_end(&(var1->environ), var2, 0);
 	free(var2);
 	var1->struct_change_env = 1;
 	return (0);
@@ -54,7 +54,7 @@ int populate_env(information_struct *var1)
 
 	for (i = 0; environ[i]; i++)
 		node_end(&var2, environ[i], 0);
-	var1->struct_env = var2;
+	var1->environ = var2;
 	return (0);
 }
 
@@ -85,7 +85,7 @@ int set_env(information_struct *var1)
  */
 char *get_env(information_struct *var1, const char *name)
 {
-	list_struct *var3 = var1->struct_env;
+	list_struct *var3 = var1->environ;
 	char *var4;
 
 	while (var3)

@@ -28,7 +28,7 @@ int vars_rep(information_struct *information)
 				string_duplicate(convert_no(getpid(), 10, 0)));
 			continue;
 		}
-		n = startwith_node(information->struct_env
+		n = startwith_node(information->environ
 			, &information->struct_argv[j][1], '=');
 		if (n)
 		{

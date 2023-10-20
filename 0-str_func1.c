@@ -4,7 +4,6 @@
  * begin_with - checks if substring in string
  * @str: the string to search
  * @subStr: the substring to find
- *
  * Return: address of substing in string or NULL
  */
 char *begin_with(const char *str, const char *subStr)
@@ -18,7 +17,6 @@ char *begin_with(const char *str, const char *subStr)
 /**
  * string_length - length of a string
  * @str: the string
- *
  * Return: length of string
  */
 int string_length(char *str)
@@ -36,7 +34,6 @@ int string_length(char *str)
  * string_compare - comparison of two strings.
  * @str1: the first string
  * @str2: the second string
- *
  * Return: -1 if str1 < str2, 1 if str1 > str2, 0 if str1 == str2
  */
 int string_compare(char *str1, char *str2)
@@ -57,7 +54,6 @@ int string_compare(char *str1, char *str2)
 /**
  * string_duplicate - duplicates a string
  * @str: the string to duplicate
- *
  * Return: pointer to the duplicated string
  */
 char *string_duplicate(const char *str)

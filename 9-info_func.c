@@ -14,8 +14,8 @@ void info_free(information_struct *information, int fields)
 	{
 		if (information->struct_his)
 			free_allnodes(&(information->struct_his));
-		if (information->struct_env)
-			free_allnodes(&(information->struct_env));
+		if (information->environ)
+			free_allnodes(&(information->environ));
 		if (!information->struct_buff)
 			free(information->struct_arg);
 		if (information->struct_als)
