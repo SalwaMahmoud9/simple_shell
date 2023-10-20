@@ -41,7 +41,7 @@ ssize_t buffer_input(information_struct *information
 #if G_L
 		size_rr = getline(buffer, &length_pt, stdin);
 #else
-		size_rr = line_get(information, buffer, &length_pt);
+		size_rr = _getline(information, buffer, &length_pt);
 #endif
 		if (size_rr > 0)
 		{
@@ -111,13 +111,13 @@ ssize_t input_get(information_struct *information)
 }
 
 /**
- * line_get - get line
+ * _getline - get line
  * @information: input variable
  * @ptr: address
  * @length: length
  * Return: s
  */
-int line_get(information_struct *information, char **ptr, size_t *length)
+int _getline(information_struct *information, char **ptr, size_t *length)
 {
 	ssize_t s = 0, size_rr = 0;
 	size_t k;

@@ -14,14 +14,14 @@
 
 #define CONV_LW	1
 #define CONV_UN	2
-#define G_L		0
-#define COM_O	1
+#define G_L 0
+#define COM_O		1
 #define COM_N	0
 #define COM_C	3
-#define COM_A	2
-#define BUFF_R  1024
-#define BUFF_F  -1
-#define BUFF_W  1024
+#define COM_A		2
+#define BUFF_R 1024
+#define BUFF_F -1
+#define BUFF_W 1024
 #define HIST_F	".shell_history"
 #define HIST_M	4096
 
@@ -166,7 +166,7 @@ int history_renumbers(information_struct *info);
 
 /* 7-getline_func.c module */
 ssize_t input_get(information_struct *);
-int line_get(information_struct *, char **, size_t *);
+int _getline(information_struct *, char **, size_t *);
 void handler_int(int);
 
 /* 8-hsh.c */
