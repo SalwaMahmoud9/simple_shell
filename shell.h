@@ -87,7 +87,7 @@ typedef struct str_linked_list
 	int struct_hist_c;
 } information_struct;
 
-#define INFO_INIT \
+#define INFORM_INI \
 {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
 	0, 0, 0}
 
