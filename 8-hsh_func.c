@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- * hsh_func - shell loop
+ * hsh - shell loop
  * @var1: var1
  * @arg_vector: arg_vector
  *
  * Return: output
  */
-int hsh_func(information_struct *var1, char **arg_vector)
+int hsh(information_struct *var1, char **arg_vector)
 {
 	ssize_t r = 0;
 	int output = 0;

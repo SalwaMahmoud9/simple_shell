@@ -169,8 +169,8 @@ ssize_t input_get(information_struct *);
 int line_get(information_struct *, char **, size_t *);
 void handler_int(int);
 
-/* 8-hsh_func.c */
-int hsh_func(information_struct *, char **);
+/* 8-hsh.c */
+int hsh(information_struct *, char **);
 int cmd_builtin_find(information_struct *);
 void cmd_find(information_struct *);
 void cmd_f(information_struct *);

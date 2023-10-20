@@ -42,6 +42,6 @@ int main(int arg_count, char **arg_vector)
 	}
 	populate_env(information);
 	history_read(information);
-	hsh_func(information, arg_vector);
+	hsh(information, arg_vector);
 	return (EXIT_SUCCESS);
 }
