@@ -132,7 +132,7 @@ void remove_comments(char *);
 void print_err(information_struct *, char *);
 int print_dec(int, int);
 char *convert_no(long int, int, int);
-
+int _atoi(char *);
 
 /* 3-emul_func.c */
 int change_dir(information_struct *);
