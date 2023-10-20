@@ -14,7 +14,7 @@ int main(int arg_count, char **arg_vector)
 	int check0 = 0, check1 = 1, check2 = 2, check_1 = -1;
 
 	asm ("mov %1, %0\n\t"
-		"add $3, %0"
+		"add $1, %0"
 		: "=r" (file_desc)
 		: "r" (file_desc));
 
