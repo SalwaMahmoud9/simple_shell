@@ -1,26 +1,6 @@
 #include "shell.h"
 
 /**
- * sAliasFunc - sAliasFunc
- * @passInfo: info_Pass
- * @ch: char
- * Return: int
- */
-int sAliasFunc(info_Pass *passInfo, char *ch)
-{
-	char *x;
-
-	x = _strchr(ch, '=');
-	if (!x)
-		return (1);
-	if (!*++x)
-		return (unAliasFunc(passInfo, ch));
-
-	unAliasFunc(passInfo, ch);
-	return (add_node_end(&(passInfo->al_AI), ch, 0) == NULL);
-}
-
-/**
  * unAliasFunc - unAliasFunc
  * @passInfo: info_Pass
  * @ch: char
@@ -41,6 +21,26 @@ int unAliasFunc(info_Pass *passInfo, char *ch)
 		get_node_index(passInfo->al_AI, node_starts_with(passInfo->al_AI, ch, -1)));
 	*x = y;
 	return (rn);
+}
+
+/**
+ * sAliasFunc - sAliasFunc
+ * @passInfo: info_Pass
+ * @ch: char
+ * Return: int
+ */
+int sAliasFunc(info_Pass *passInfo, char *ch)
+{
+	char *x;
+
+	x = _strchr(ch, '=');
+	if (!x)
+		return (1);
+	if (!*++x)
+		return (unAliasFunc(passInfo, ch));
+
+	unAliasFunc(passInfo, ch);
+	return (add_node_end(&(passInfo->al_AI), ch, 0) == NULL);
 }
 
 /**
