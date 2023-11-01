@@ -126,13 +126,11 @@ int _getline(information_struct *information, char **ptr, size_t *length)
 	static char buffer[BUFF_R];
 
 	pr = *ptr;
-	if (length && pr)
+	if (pr && length)
 		s = *length;
 	if (length1 == i)
-	{
-		i = 0;
-		length1 = 0;
-	}
+		i = length1 = 0;
+
 	size_rr = buffer_read(information, buffer, &length1);
 	if (size_rr == -1 || (size_rr == 0 && length1 == 0))
 		return (-1);
@@ -142,10 +140,11 @@ int _getline(information_struct *information, char **ptr, size_t *length)
 	new_pr = _memory_loc(pr, s, s ? s + k : k + 1);
 	if (!new_pr)
 		return (pr ? free(pr), -1 : -1);
-	if (!s)
-		_string_copy2(new_pr, buffer + i, k - i + 1);
-	else
+	if (s)
 		_string_concat2(new_pr, buffer + i, k - i);
+	else
+		_string_copy2(new_pr, buffer + i, k - i + 1);
+		
 
 	s += (k - i);
 	i = k;

@@ -12,7 +12,7 @@
 #include <limits.h>
 #include <errno.h>
 
-#define CONV_LW	1
+#define CONV_LW	 1
 #define CONV_UN	2
 #define G_L 0
 
@@ -28,6 +28,9 @@
 #define HIST_F	".shell_history"
 #define HIST_M	4096
 
+#define BUFF_R 1024
+#define BUFF_W 1024
+#define BUFF_F -1
 
 extern char **environ;
 
