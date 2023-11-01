@@ -58,22 +58,22 @@ int _changeDirFunc(info_Pass *passInfo)
 		_puts("failure \n");
 	if (!passInfo->arg_V[1])
 	{
-		dic = _getenv(passInfo, "HOME=");
+		dic = _getevFunc(passInfo, "HOME=");
 		if (!dic)
-			chd = chdir((dic = _getenv(passInfo, "PWD=")) ? dic : "/");
+			chd = chdir((dic = _getevFunc(passInfo, "PWD=")) ? dic : "/");
 		else
 			chd = chdir(dic);
 	}
 	else if (_strcmp(passInfo->arg_V[1], "-") == 0)
 	{
-		if (!_getenv(passInfo, "OLDPWD="))
+		if (!_getevFunc(passInfo, "OLDPWD="))
 		{
 			_puts(x);
 			_putchar('\n');
 			return (1);
 		}
-		_puts(_getenv(passInfo, "OLDPWD=")), _putchar('\n');
-		chd = chdir((dic = _getenv(passInfo, "OLDPWD=")) ? dic : "/");
+		_puts(_getevFunc(passInfo, "OLDPWD=")), _putchar('\n');
+		chd = chdir((dic = _getevFunc(passInfo, "OLDPWD=")) ? dic : "/");
 	}
 	else
 		chd = chdir(passInfo->arg_V[1]);
@@ -84,8 +84,8 @@ int _changeDirFunc(info_Pass *passInfo)
 	}
 	else
 	{
-		_setenv(passInfo, "OLDPWD", _getenv(passInfo, "PWD="));
-		_setenv(passInfo, "PWD", getcwd(buffer1, 1024));
+		_stenvFunc(passInfo, "OLDPWD", _getevFunc(passInfo, "PWD="));
+		_stenvFunc(passInfo, "PWD", getcwd(buffer1, 1024));
 	}
 	return (0);
 }

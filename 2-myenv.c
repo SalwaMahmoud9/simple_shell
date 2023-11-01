@@ -1,92 +1,85 @@
 #include "shell.h"
 
 /**
- * _myenv - prints the current environment
- * @info: Structure containing potential arguments. Used to maintain
- *          constant function prototype.
- * Return: Always 0
+ * getenvFunc - getenvFunc
+ * @passInfo: var.
+ * Return: char
  */
-int _myenv(info_Pass *info)
+char **getenvFunc(info_Pass *passInfo)
 {
-	print_list_str(info->env_L);
-	return (0);
-}
-
-/**
- * _getenv - gets the value of an environ variable
- * @info: Structure containing potential arguments. Used to maintain
- * @name: env var name
- *
- * Return: the value
- */
-char *_getenv(info_Pass *info, const char *name)
-{
-	list_String *node = info->env_L;
-	char *p;
-
-	while (node)
+	if (!passInfo->environ || passInfo->env_C)
 	{
-		p = starts_with(node->st, name);
-		if (p && *p)
-			return (p);
-		node = node->nx;
+		passInfo->environ = list_to_strings(passInfo->env_L);
+		passInfo->env_C = 0;
 	}
-	return (NULL);
+
+	return (passInfo->environ);
 }
 
 /**
- * _mysetenv - Initialize a new environment variable,
- *             or modify an existing one
- * @info: Structure containing potential arguments. Used to maintain
- *        constant function prototype.
- *  Return: Always 0
+ * _unenvFunc - _unenvFunc
+ * @passInfo: var
+ * @v: var
+ * Return: int
  */
-int _mysetenv(info_Pass *info)
+int _unenvFunc(info_Pass *passInfo, char *v)
 {
-	if (info->arg_C != 3)
+	size_t ii = 0;
+	list_String *listString_n = passInfo->env_L;
+	char *x;
+
+	if (!listString_n || !v)
+		return (0);
+
+	while (listString_n)
+	{
+		x = starts_with(listString_n->st, v);
+		if (x && *x == '=')
+		{
+			passInfo->env_C = delete_node_at_index(&(passInfo->env_L), ii);
+			ii = 0;
+			listString_n = passInfo->env_L;
+			continue;
+		}
+		listString_n = listString_n->nx;
+		ii++;
+	}
+	return (passInfo->env_C);
+}
+
+/**
+ * _stevFunc - _stevFunc
+ * @passInfo: var
+ * Return: int
+ */
+int _stevFunc(info_Pass *passInfo)
+{
+	if (passInfo->arg_C != 3)
 	{
 		_eputs("Incorrect number of arguements\n");
 		return (1);
 	}
-	if (_setenv(info, info->arg_V[1], info->arg_V[2]))
+	if (_stenvFunc(passInfo, passInfo->arg_V[1], passInfo->arg_V[2]))
 		return (0);
 	return (1);
 }
 
 /**
- * _myunsetenv - Remove an environment variable
- * @info: Structure containing potential arguments. Used to maintain
- *        constant function prototype.
- *  Return: Always 0
+ * _ustevFunc - _ustevFunc
+ * @passInfo: var
+ * Return: int
  */
-int _myunsetenv(info_Pass *info)
+int _ustevFunc(info_Pass *passInfo)
 {
-	int i;
+	int ii;
 
-	if (info->arg_C == 1)
+	if (passInfo->arg_C == 1)
 	{
 		_eputs("Too few arguements.\n");
 		return (1);
 	}
-	for (i = 1; i <= info->arg_C; i++)
-		_unsetenv(info, info->arg_V[i]);
+	for (ii = 1; ii <= passInfo->arg_C; ii++)
+		_unenvFunc(passInfo, passInfo->arg_V[ii]);
 
-	return (0);
-}
-
-/**
- * populate_env_list - populates env linked list
- * @info: Structure containing potential arguments. Used to maintain
- *          constant function prototype.
- * Return: Always 0
- */
-int populate_env_list(info_Pass *info)
-{
-	list_String *node = NULL;
-	size_t i;
-
-	for (i = 0; environ[i]; i++)
-		add_node_end(&node, environ[i], 0);
-	info->env_L = node;
 	return (0);
 }

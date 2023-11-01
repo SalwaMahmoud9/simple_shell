@@ -111,14 +111,14 @@ int _historyFunc(info_Pass *);
 int _aliasFunc(info_Pass *);
 
 /* myenv.c */
-char *_getenv(info_Pass *, const char *);
-int _myenv(info_Pass *);
-int _mysetenv(info_Pass *);
-int _myunsetenv(info_Pass *);
-int populate_env_list(info_Pass *);
-char **get_environ(info_Pass *);
-int _unsetenv(info_Pass *, char *);
-int _setenv(info_Pass *, char *, char *);
+char *_getevFunc(info_Pass *, const char *);
+int _envFunc(info_Pass *);
+int _stevFunc(info_Pass *);
+int _ustevFunc(info_Pass *);
+int popenvFunc(info_Pass *);
+char **getenvFunc(info_Pass *);
+int _unenvFunc(info_Pass *, char *);
+int _stenvFunc(info_Pass *, char *, char *);
 
 /* chain.c */
 int is_chain(info_Pass *, char *, size_t *);

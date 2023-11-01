@@ -1,93 +1,90 @@
 #include "shell.h"
 
 /**
- * get_environ - returns the string array copy of our environ
- * @info: Structure containing potential arguments. Used to maintain
- *          constant function prototype.
- * Return: Always 0
+ * popenvFunc - popenvFunc
+ * @passInfo: var
+ * Return: int
  */
-char **get_environ(info_Pass *info)
+int popenvFunc(info_Pass *passInfo)
 {
-	if (!info->environ || info->env_C)
-	{
-		info->environ = list_to_strings(info->env_L);
-		info->env_C = 0;
-	}
+	list_String *listString_n = NULL;
+	size_t ii;
 
-	return (info->environ);
+	for (ii = 0; environ[ii]; ii++)
+		add_node_end(&listString_n, environ[ii], 0);
+	passInfo->env_L = listString_n;
+	return (0);
 }
 
 /**
- * _unsetenv - Remove an environment variable
- * @info: Structure containing potential arguments. Used to maintain
- *        constant function prototype.
- *  Return: 1 on delete, 0 otherwise
- * @var: the string env var property
+ * _getevFunc - _getevFunc
+ * @passInfo: var
+ * @name: var
+ * Return: char
  */
-int _unsetenv(info_Pass *info, char *var)
+char *_getevFunc(info_Pass *passInfo, const char *name)
 {
-	list_String *node = info->env_L;
-	size_t i = 0;
-	char *p;
+	list_String *listString_n = passInfo->env_L;
+	char *x;
 
-	if (!node || !var)
-		return (0);
-
-	while (node)
+	while (listString_n)
 	{
-		p = starts_with(node->st, var);
-		if (p && *p == '=')
-		{
-			info->env_C = delete_node_at_index(&(info->env_L), i);
-			i = 0;
-			node = info->env_L;
-			continue;
-		}
-		node = node->nx;
-		i++;
+		x = starts_with(listString_n->st, name);
+		if (x && *x)
+			return (x);
+		listString_n = listString_n->nx;
 	}
-	return (info->env_C);
+	return (NULL);
 }
 
 /**
- * _setenv - Initialize a new environment variable,
- *             or modify an existing one
- * @info: Structure containing potential arguments. Used to maintain
- *        constant function prototype.
- * @var: the string env var property
- * @value: the string env var value
- *  Return: Always 0
+ * _envFunc - _envFunc
+ * @passInfo: var
+ * Return: int
  */
-int _setenv(info_Pass *info, char *var, char *value)
+int _envFunc(info_Pass *passInfo)
 {
-	char *buf = NULL;
-	list_String *node;
-	char *p;
+	print_list_str(passInfo->env_L);
+	return (0);
+}
 
-	if (!var || !value)
+/**
+ * _stenvFunc - _stenvFunc
+ * @passInfo: var
+ * @v: var
+ * @val: var
+ * Return: int
+ */
+int _stenvFunc(info_Pass *passInfo, char *v, char *val)
+{
+	list_String *listString_n;
+	char *buff = NULL;
+	char *x;
+
+	if (!v || !val)
 		return (0);
 
-	buf = malloc(_strlen(var) + _strlen(value) + 2);
-	if (!buf)
+	buff = malloc(_strlen(v) + _strlen(val) + 2);
+	if (!buff)
 		return (1);
-	_strcpy(buf, var);
-	_strcat(buf, "=");
-	_strcat(buf, value);
-	node = info->env_L;
-	while (node)
+	_strcpy(buff, v);
+	_strcat(buff, "=");
+	_strcat(buff, val);
+	listString_n = passInfo->env_L;
+	while (listString_n)
 	{
-		p = starts_with(node->st, var);
-		if (p && *p == '=')
+		x = starts_with(listString_n->st, v);
+		if (x && *x == '=')
 		{
-			free(node->st);
-			node->st = buf;
-			info->env_C = 1;
+			free(listString_n->st);
+			listString_n->st = buff;
+			passInfo->env_C = 1;
 			return (0);
 		}
-		node = node->nx;
+		listString_n = listString_n->nx;
 	}
-	add_node_end(&(info->env_L), buf, 0);
-	free(buf);
-	info->env_C = 1;
+	add_node_end(&(passInfo->env_L), buff, 0);
+	free(buff);
+	passInfo->env_C = 1;
 	return (0);
 }

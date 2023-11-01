@@ -57,11 +57,11 @@ int find_builtin(info_Pass *info)
 	int i, built_in_ret = -1;
 	builtin_String builtintbl[] = {
 		{"exit", _exitFunc},
-		{"env", _myenv},
+		{"env", _envFunc},
 		{"help", _helpFunc},
 		{"history", _historyFunc},
-		{"setenv", _mysetenv},
-		{"unsetenv", _myunsetenv},
+		{"setenv", _stevFunc},
+		{"unsetenv", _ustevFunc},
 		{"cd", _changeDirFunc},
 		{"alias", _aliasFunc},
 		{NULL, NULL}
@@ -100,7 +100,7 @@ void find_cmd(info_Pass *info)
 	if (!k)
 		return;
 
-	path = find_path(info, _getenv(info, "PATH="), info->arg_V[0]);
+	path = find_path(info, _getevFunc(info, "PATH="), info->arg_V[0]);
 	if (path)
 	{
 		info->string_P = path;
@@ -108,7 +108,7 @@ void find_cmd(info_Pass *info)
 	}
 	else
 	{
-		if ((interactive(info) || _getenv(info, "PATH=")
+		if ((interactive(info) || _getevFunc(info, "PATH=")
 			|| info->arg_V[0][0] == '/') && is_cmd(info, info->arg_V[0]))
 			fork_cmd(info);
 		else if (*(info->arg_G) != '\n')
@@ -138,7 +138,7 @@ void fork_cmd(info_Pass *info)
 	}
 	if (child_pid == 0)
 	{
-		if (execve(info->string_P, info->arg_V, get_environ(info)) == -1)
+		if (execve(info->string_P, info->arg_V, getenvFunc(info)) == -1)
 		{
 			free_info(info, 1);
 			if (errno == EACCES)
