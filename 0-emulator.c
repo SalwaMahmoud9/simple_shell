@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _exitFunc - _exitFunc
+ * _exitFunc - exitFunc
  * @passInfo: info_Pass
  * Return: int
  */
@@ -28,7 +28,7 @@ int _exitFunc(info_Pass *passInfo)
 }
 
 /**
- * _helpFunc - _helpFunc
+ * _helpFunc - helpFunc
  * @passInfo: info_Pass
  * Return: int
  */
