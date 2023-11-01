@@ -15,13 +15,16 @@
 #define CONV_LW	1
 #define CONV_UN	2
 #define G_L 0
-#define COM_O		1
+
 #define COM_N	0
-#define COM_C	3
+#define COM_O		1
 #define COM_A		2
+#define COM_C	3
+
 #define BUFF_R 1024
-#define BUFF_F -1
 #define BUFF_W 1024
+
+#define BUFF_F -1
 #define HIST_F	".shell_history"
 #define HIST_M	4096
 
