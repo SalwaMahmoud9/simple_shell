@@ -104,11 +104,11 @@ typedef struct builtinString
 } builtin_String;
 
 /* emulator.c */
-int _myexit(info_Pass *);
-int _mycd(info_Pass *);
-int _myhelp(info_Pass *);
-int _myhistory(info_Pass *);
-int _myalias(info_Pass *);
+int _exitFunc(info_Pass *);
+int _changeDirFunc(info_Pass *);
+int _helpFunc(info_Pass *);
+int _historyFunc(info_Pass *);
+int _aliasFunc(info_Pass *);
 
 /* myenv.c */
 char *_getenv(info_Pass *, const char *);

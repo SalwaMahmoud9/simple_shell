@@ -56,14 +56,14 @@ int find_builtin(info_Pass *info)
 {
 	int i, built_in_ret = -1;
 	builtin_String builtintbl[] = {
-		{"exit", _myexit},
+		{"exit", _exitFunc},
 		{"env", _myenv},
-		{"help", _myhelp},
-		{"history", _myhistory},
+		{"help", _helpFunc},
+		{"history", _historyFunc},
 		{"setenv", _mysetenv},
 		{"unsetenv", _myunsetenv},
-		{"cd", _mycd},
-		{"alias", _myalias},
+		{"cd", _changeDirFunc},
+		{"alias", _aliasFunc},
 		{NULL, NULL}
 	};
 
