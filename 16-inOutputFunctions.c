@@ -7,7 +7,7 @@
  * Return: allocated string containg history file
  */
 
-char *get_history_file(info_t *info)
+char *get_history_file(info_Pass *info)
 {
 	char *buf, *dir;
 
@@ -30,11 +30,11 @@ char *get_history_file(info_t *info)
  *
  * Return: 1 on success, else -1
  */
-int write_history(info_t *info)
+int write_history(info_Pass *info)
 {
 	ssize_t fd;
 	char *filename = get_history_file(info);
-	list_t *node = NULL;
+	list_String *node = NULL;
 
 	if (!filename)
 		return (-1);
@@ -43,9 +43,9 @@ int write_history(info_t *info)
 	free(filename);
 	if (fd == -1)
 		return (-1);
-	for (node = info->history; node; node = node->next)
+	for (node = info->his_T; node; node = node->nx)
 	{
-		_putsfd(node->str, fd);
+		_putsfd(node->st, fd);
 		_putfd('\n', fd);
 	}
 	_putfd(BUFFER_FLUSH, fd);
@@ -59,7 +59,7 @@ int write_history(info_t *info)
  *
  * Return: histcount on success, 0 otherwise
  */
-int read_history(info_t *info)
+int read_history(info_Pass *info)
 {
 	int i, last = 0, linecount = 0;
 	ssize_t fd, rdlen, fsize = 0;
@@ -95,11 +95,11 @@ int read_history(info_t *info)
 	if (last != i)
 		build_history_list(info, buf + last, linecount++);
 	free(buf);
-	info->histcount = linecount;
-	while (info->histcount-- >= HISTORY_M)
-		delete_node_at_index(&(info->history), 0);
+	info->his_C = linecount;
+	while (info->his_C-- >= HISTORY_M)
+		delete_node_at_index(&(info->his_T), 0);
 	renumber_history(info);
-	return (info->histcount);
+	return (info->his_C);
 }
 
 /**
@@ -110,16 +110,16 @@ int read_history(info_t *info)
  *
  * Return: Always 0
  */
-int build_history_list(info_t *info, char *buf, int linecount)
+int build_history_list(info_Pass *info, char *buf, int linecount)
 {
-	list_t *node = NULL;
+	list_String *node = NULL;
 
-	if (info->history)
-		node = info->history;
+	if (info->his_T)
+		node = info->his_T;
 	add_node_end(&node, buf, linecount);
 
-	if (!info->history)
-		info->history = node;
+	if (!info->his_T)
+		info->his_T = node;
 	return (0);
 }
 
@@ -129,15 +129,15 @@ int build_history_list(info_t *info, char *buf, int linecount)
  *
  * Return: the new histcount
  */
-int renumber_history(info_t *info)
+int renumber_history(info_Pass *info)
 {
-	list_t *node = info->history;
+	list_String *node = info->his_T;
 	int i = 0;
 
 	while (node)
 	{
-		node->num = i++;
-		node = node->next;
+		node->no = i++;
+		node = node->nx;
 	}
-	return (info->histcount = i);
+	return (info->his_C = i);
 }

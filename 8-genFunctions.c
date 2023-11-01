@@ -35,13 +35,13 @@ int _erratoi(char *s)
  * Return: 0 if no numbers in string, converted number otherwise
  *        -1 on error
  */
-void print_error(info_t *info, char *estr)
+void print_error(info_Pass *info, char *estr)
 {
-	_eputs(info->fname);
+	_eputs(info->name_F);
 	_eputs(": ");
-	print_d(info->line_count, STDERR_FILENO);
+	print_d(info->error_C, STDERR_FILENO);
 	_eputs(": ");
-	_eputs(info->argv[0]);
+	_eputs(info->arg_V[0]);
 	_eputs(": ");
 	_eputs(estr);
 }

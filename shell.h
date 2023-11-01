@@ -33,121 +33,119 @@ extern char **environ;
 
 
 /**
- * struct liststr - singly linked list
- * @num: the number field
- * @str: a string
- * @next: points to the next node
+ * struct listString - listString
+ * @no: variable
+ * @st: variable
+ * @nx: variable
  */
-typedef struct liststr
+typedef struct listString
 {
-	int num;
-	char *str;
-	struct liststr *next;
-} list_t;
+	int no;
+	char *st;
+	struct listString *nx;
+} list_String;
 
 /**
- *struct passinfo - contains pseudo-arguements to pass into a function,
- *					allowing uniform prototype for function pointer struct
- *@arg: a string generated from getline containing arguements
- *@argv: an array of strings generated from arg
- *@path: a string path for the current command
- *@argc: the argument count
- *@line_count: the error count
- *@err_num: the error code for exit()s
- *@linecount_flag: if on count this line of input
- *@fname: the program filename
- *@env: linked list local copy of environ
- *@environ: custom modified copy of environ from LL env
- *@history: the history node
- *@alias: the alias node
- *@env_changed: on if environ was changed
- *@status: the return status of the last exec'd command
- *@cmd_buf: address of pointer to cmd_buf, on if chaining
- *@cmd_buf_type: CMD_type ||, &&, ;
- *@readfd: the fd from which to read line input
- *@histcount: the history line number count
+ *struct infoPass - Info Pass
+ *@arg_G: variable
+ *@arg_V: variable
+ *@string_P: variable
+ *@arg_C: variable
+ *@error_C: variable
+ *@error_N: variable
+ *@flag_C: variable
+ *@name_F: variable
+ *@env_L: variable
+ *@environ: variable
+ *@his_T: variable
+ *@al_AI: variable
+ *@env_C: variable
+ *@sta_S: variable
+ *@cm_B: variable
+ *@cm_BT: variable
+ *@fd_R: variable
+ *@his_C: variable
  */
-typedef struct passinfo
+typedef struct infoPass
 {
-	char *arg;
-	char **argv;
-	char *path;
-	int argc;
-	unsigned int line_count;
-	int err_num;
-	int linecount_flag;
-	char *fname;
-	list_t *env;
-	list_t *history;
-	list_t *alias;
+	char *arg_G;
+	char **arg_V;
+	char *string_P;
+	int arg_C;
+	unsigned int error_C;
+	int error_N;
+	int flag_C;
+	char *name_F;
+	list_String *env_L;
+	list_String *his_T;
+	list_String *al_AI;
 	char **environ;
-	int env_changed;
-	int status;
-
-	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
-	int cmd_buf_type; /* CMD_type ||, &&, ; */
-	int readfd;
-	int histcount;
-} info_t;
+	int env_C;
+	int sta_S;
+	char **cm_B; 
+	int cm_BT; 
+	int fd_R;
+	int his_C;
+} info_Pass;
 
 #define INFO_INIT \
 {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
 	0, 0, 0}
 
 /**
- *struct builtin - contains a builtin string and related function
- *@type: the builtin command flag
- *@func: the function
+ *struct builtinString - builtinString
+ *@strType: variable
+ *@f: variable
  */
-typedef struct builtin
+typedef struct builtinString
 {
-	char *type;
-	int (*func)(info_t *);
-} builtin_table;
+	char *strType;
+	int (*f)(info_Pass *);
+} builtin_String;
 
 /* emulator.c */
-int _myexit(info_t *);
-int _mycd(info_t *);
-int _myhelp(info_t *);
-int _myhistory(info_t *);
-int _myalias(info_t *);
+int _myexit(info_Pass *);
+int _mycd(info_Pass *);
+int _myhelp(info_Pass *);
+int _myhistory(info_Pass *);
+int _myalias(info_Pass *);
 
 /* myenv.c */
-char *_getenv(info_t *, const char *);
-int _myenv(info_t *);
-int _mysetenv(info_t *);
-int _myunsetenv(info_t *);
-int populate_env_list(info_t *);
-char **get_environ(info_t *);
-int _unsetenv(info_t *, char *);
-int _setenv(info_t *, char *, char *);
+char *_getenv(info_Pass *, const char *);
+int _myenv(info_Pass *);
+int _mysetenv(info_Pass *);
+int _myunsetenv(info_Pass *);
+int populate_env_list(info_Pass *);
+char **get_environ(info_Pass *);
+int _unsetenv(info_Pass *, char *);
+int _setenv(info_Pass *, char *, char *);
 
 /* chain.c */
-int is_chain(info_t *, char *, size_t *);
-void check_chain(info_t *, char *, size_t *, size_t, size_t);
-int replace_alias(info_t *);
-int replace_vars(info_t *);
+int is_chain(info_Pass *, char *, size_t *);
+void check_chain(info_Pass *, char *, size_t *, size_t, size_t);
+int replace_alias(info_Pass *);
+int replace_vars(info_Pass *);
 int replace_string(char **, char *);
 
 /* listString.c */
-list_t *add_node(list_t **, const char *, int);
-list_t *add_node_end(list_t **, const char *, int);
-size_t print_list_str(const list_t *);
-int delete_node_at_index(list_t **, unsigned int);
-void free_list(list_t **);
-size_t list_len(const list_t *);
-char **list_to_strings(list_t *);
-size_t print_list(const list_t *);
-list_t *node_starts_with(list_t *, char *, char);
-ssize_t get_node_index(list_t *, list_t *);
+list_String *add_node(list_String **, const char *, int);
+list_String *add_node_end(list_String **, const char *, int);
+size_t print_list_str(const list_String *);
+int delete_node_at_index(list_String **, unsigned int);
+void free_list(list_String **);
+size_t list_len(const list_String *);
+char **list_to_strings(list_String *);
+size_t print_list(const list_String *);
+list_String *node_starts_with(list_String *, char *, char);
+ssize_t get_node_index(list_String *, list_String *);
 
 /* genFunctions.c */
-int interactive(info_t *);
+int interactive(info_Pass *);
 int is_delim(char, char *);
 int _isalpha(int);
 int _atoi(char *);
 int _erratoi(char *);
-void print_error(info_t *, char *);
+void print_error(info_Pass *, char *);
 int print_d(int, int);
 char *convert_number(long int, int, int);
 void remove_comments(char *);
@@ -177,34 +175,34 @@ char **strtow2(char *, char);
 void _eputs(char *);
 int _eputchar(char);
 int _putfd(char c, int fd);
-int _putsfd(char *str, int fd);
+int _putsfd(char *st, int fd);
 
 /* inOutputFunctions.c */
-char *get_history_file(info_t *info);
-int write_history(info_t *info);
-int read_history(info_t *info);
-int build_history_list(info_t *info, char *buf, int linecount);
-int renumber_history(info_t *info);
+char *get_history_file(info_Pass *info);
+int write_history(info_Pass *info);
+int read_history(info_Pass *info);
+int build_history_list(info_Pass *info, char *buf, int linecount);
+int renumber_history(info_Pass *info);
 
 /* pathFunctions.c */
-int is_cmd(info_t *, char *);
+int is_cmd(info_Pass *, char *);
 char *dup_chars(char *, int, int);
-char *find_path(info_t *, char *, char *);
+char *find_path(info_Pass *, char *, char *);
 
 /* infoFunctions.c */
-void clear_info(info_t *);
-void set_info(info_t *, char **);
-void free_info(info_t *, int);
+void clear_info(info_Pass *);
+void set_info(info_Pass *, char **);
+void free_info(info_Pass *, int);
 
 /* hshFunctions.c */
-int hsh(info_t *, char **);
-int find_builtin(info_t *);
-void find_cmd(info_t *);
-void fork_cmd(info_t *);
+int hsh(info_Pass *, char **);
+int find_builtin(info_Pass *);
+void find_cmd(info_Pass *);
+void fork_cmd(info_Pass *);
 
 /* getlineFunctions.c */
-ssize_t get_input(info_t *);
-int _getline(info_t *, char **, size_t *);
+ssize_t get_input(info_Pass *);
+int _getline(info_Pass *, char **, size_t *);
 void sigintHandler(int);
 
 #endif

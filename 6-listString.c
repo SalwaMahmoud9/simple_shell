@@ -6,27 +6,27 @@
  *
  * Return: size of list
  */
-size_t list_len(const list_t *h)
+size_t list_len(const list_String *h)
 {
 	size_t i = 0;
 
 	while (h)
 	{
-		h = h->next;
+		h = h->nx;
 		i++;
 	}
 	return (i);
 }
 
 /**
- * list_to_strings - returns an array of strings of the list->str
+ * list_to_strings - returns an array of strings of the list->st
  * @head: pointer to first node
  *
  * Return: array of strings
  */
-char **list_to_strings(list_t *head)
+char **list_to_strings(list_String *head)
 {
-	list_t *node = head;
+	list_String *node = head;
 	size_t i = list_len(head), j;
 	char **strs;
 	char *str;
@@ -36,9 +36,9 @@ char **list_to_strings(list_t *head)
 	strs = malloc(sizeof(char *) * (i + 1));
 	if (!strs)
 		return (NULL);
-	for (i = 0; node; node = node->next, i++)
+	for (i = 0; node; node = node->nx, i++)
 	{
-		str = malloc(_strlen(node->str) + 1);
+		str = malloc(_strlen(node->st) + 1);
 		if (!str)
 		{
 			for (j = 0; j < i; j++)
@@ -47,7 +47,7 @@ char **list_to_strings(list_t *head)
 			return (NULL);
 		}
 
-		str = _strcpy(str, node->str);
+		str = _strcpy(str, node->st);
 		strs[i] = str;
 	}
 	strs[i] = NULL;
@@ -56,23 +56,23 @@ char **list_to_strings(list_t *head)
 
 
 /**
- * print_list - prints all elements of a list_t linked list
+ * print_list - prints all elements of a list_String linked list
  * @h: pointer to first node
  *
  * Return: size of list
  */
-size_t print_list(const list_t *h)
+size_t print_list(const list_String *h)
 {
 	size_t i = 0;
 
 	while (h)
 	{
-		_puts(convert_number(h->num, 10, 0));
+		_puts(convert_number(h->no, 10, 0));
 		_putchar(':');
 		_putchar(' ');
-		_puts(h->str ? h->str : "(nil)");
+		_puts(h->st ? h->st : "(nil)");
 		_puts("\n");
-		h = h->next;
+		h = h->nx;
 		i++;
 	}
 	return (i);
@@ -86,16 +86,16 @@ size_t print_list(const list_t *h)
  *
  * Return: match node or null
  */
-list_t *node_starts_with(list_t *node, char *prefix, char c)
+list_String *node_starts_with(list_String *node, char *prefix, char c)
 {
 	char *p = NULL;
 
 	while (node)
 	{
-		p = starts_with(node->str, prefix);
+		p = starts_with(node->st, prefix);
 		if (p && ((c == -1) || (*p == c)))
 			return (node);
-		node = node->next;
+		node = node->nx;
 	}
 	return (NULL);
 }
@@ -107,7 +107,7 @@ list_t *node_starts_with(list_t *node, char *prefix, char c)
  *
  * Return: index of node or -1
  */
-ssize_t get_node_index(list_t *head, list_t *node)
+ssize_t get_node_index(list_String *head, list_String *node)
 {
 	size_t i = 0;
 
@@ -115,7 +115,7 @@ ssize_t get_node_index(list_t *head, list_t *node)
 	{
 		if (head == node)
 			return (i);
-		head = head->next;
+		head = head->nx;
 		i++;
 	}
 	return (-1);
