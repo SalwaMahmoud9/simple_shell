@@ -2,46 +2,43 @@
 
 /**
  * main - entry point
- * @arg_count: count
- * @arg_vector: vector
- * Return: 0 /1
+ * @ac: arg count
+ * @av: arg vector
+ *
+ * Return: 0 on success, 1 on error
  */
-int main(int arg_count, char **arg_vector)
+int main(int ac, char **av)
 {
-
-	int file_desc = 2;
-	information_struct information[] = { INFORM_INI };
-	int check0 = 0, check1 = 1, check2 = 2, check_1 = -1;
+	info_t info[] = { INFO_INIT };
+	int fd = 2;
 
 	asm ("mov %1, %0\n\t"
 		"add $3, %0"
-		: "=r" (file_desc)
-		: "r" (file_desc));
+		: "=r" (fd)
+		: "r" (fd));
 
-	if (arg_count == check2)
+	if (ac == 2)
 	{
-		file_desc = open(arg_vector[check1], O_RDONLY);
-		if (file_desc == check_1)
+		fd = open(av[1], O_RDONLY);
+		if (fd == -1)
 		{
 			if (errno == EACCES)
-			{
 				exit(126);
-			}
 			if (errno == ENOENT)
 			{
-				_put_estring(arg_vector[check0]);
-				_put_estring(": 0: Cannot open ");
-				_put_estring(arg_vector[check1]);
-				_put_echar('\n');
-				_put_echar(BUFF_F);
+				_eputs(av[0]);
+				_eputs(": 0: Can't open ");
+				_eputs(av[1]);
+				_eputchar('\n');
+				_eputchar(BUF_FLUSH);
 				exit(127);
 			}
 			return (EXIT_FAILURE);
 		}
-		information->struct_f_r = file_desc;
+		info->readfd = fd;
 	}
-	populate_env(information);
-	history_read(information);
-	hsh(information, arg_vector);
+	populate_env_list(info);
+	read_history(info);
+	hsh(info, av);
 	return (EXIT_SUCCESS);
 }
