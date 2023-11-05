@@ -66,10 +66,10 @@ ssize_t get_input(info_Pass *info)
 		j = i; /* init new iterator to current buf position */
 		p = buf + i; /* get pointer for return */
 
-		checkChainF(info, buf, &j, i, len);
+		check_chain(info, buf, &j, i, len);
 		while (j < len) /* iterate to semicolon or end */
 		{
-			if (check_Chain(info, buf, &j))
+			if (is_chain(info, buf, &j))
 				break;
 			j++;
 		}
