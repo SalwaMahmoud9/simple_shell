@@ -1,150 +1,154 @@
 #include "shell.h"
 
-
 /**
- * checkChainF - checkChainF
- * @passInfo: var
- * @buff: var
- * @x: var
- * @ii: var
- * @l: var
- * Return: Void
+ * is_chain - test if current char in buffer is a chain delimeter
+ * @info: the parameter struct
+ * @buf: the char buffer
+ * @p: address of current position in buf
+ *
+ * Return: 1 if chain delimeter, 0 otherwise
  */
-void checkChainF(info_Pass *passInfo, char *buff, size_t *x, size_t ii, size_t l)
+int is_chain(info_Pass *info, char *buf, size_t *p)
 {
-	size_t jj = *x;
+	size_t j = *p;
 
-	if (passInfo->cm_BT == COMMAND_A)
+	if (buf[j] == '|' && buf[j + 1] == '|')
 	{
-		if (passInfo->sta_S)
-		{
-			buff[ii] = 0;
-			jj = l;
-		}
+		buf[j] = 0;
+		j++;
+		info->cm_BT = COMMAND_O;
 	}
-	if (passInfo->cm_BT == COMMAND_O)
+	else if (buf[j] == '&' && buf[j + 1] == '&')
 	{
-		if (!passInfo->sta_S)
-		{
-			buff[ii] = 0;
-			jj = l;
-		}
+		buf[j] = 0;
+		j++;
+		info->cm_BT = COMMAND_A;
 	}
-
-	*x = jj;
-}
-
-/**
- * check_Chain - check_Chain
- * @passInfo: var
- * @buff: var
- * @x: var
- * Return: int
- */
-int check_Chain(info_Pass *passInfo, char *buff, size_t *x)
-{
-	size_t jj = *x;
-
-	if (buff[jj] == '|' && buff[jj + 1] == '|')
+	else if (buf[j] == ';') /* found end of this command */
 	{
-		buff[jj] = 0;
-		jj++;
-		passInfo->cm_BT = COMMAND_O;
-	}
-	else if (buff[jj] == '&' && buff[jj + 1] == '&')
-	{
-		buff[jj] = 0;
-		jj++;
-		passInfo->cm_BT = COMMAND_A;
-	}
-	else if (buff[jj] == ';')
-	{
-		buff[jj] = 0;
-		passInfo->cm_BT = COMMAND_CH;
+		buf[j] = 0; /* replace semicolon with null */
+		info->cm_BT = COMMAND_CH;
 	}
 	else
 		return (0);
-	*x = jj;
+	*p = j;
 	return (1);
 }
 
 /**
- * rep_Alias - rep_Alias
- * @passInfo: var
- * Return: int
+ * check_chain - checks we should continue chaining based on last status
+ * @info: the parameter struct
+ * @buf: the char buffer
+ * @p: address of current position in buf
+ * @i: starting position in buf
+ * @len: length of buf
+ *
+ * Return: Void
  */
-int rep_Alias(info_Pass *passInfo)
+void check_chain(info_Pass *info, char *buf, size_t *p, size_t i, size_t len)
 {
-	int ii;
-	char *x;
-	list_String *n;
+	size_t j = *p;
 
-	for (ii = 0; ii < 10; ii++)
+	if (info->cm_BT == COMMAND_A)
 	{
-		n = node_starts_with(passInfo->al_AI, passInfo->arg_V[0], '=');
-		if (!n)
+		if (info->sta_S)
+		{
+			buf[i] = 0;
+			j = len;
+		}
+	}
+	if (info->cm_BT == COMMAND_O)
+	{
+		if (!info->sta_S)
+		{
+			buf[i] = 0;
+			j = len;
+		}
+	}
+
+	*p = j;
+}
+
+/**
+ * replace_alias - replaces an aliases in the tokenized string
+ * @info: the parameter struct
+ *
+ * Return: 1 if replaced, 0 otherwise
+ */
+int replace_alias(info_Pass *info)
+{
+	int i;
+	list_String *node;
+	char *p;
+
+	for (i = 0; i < 10; i++)
+	{
+		node = node_starts_with(info->al_AI, info->arg_V[0], '=');
+		if (!node)
 			return (0);
-		free(passInfo->arg_V[0]);
-		x = _strchr(n->st, '=');
-		if (!x)
+		free(info->arg_V[0]);
+		p = _strchr(node->st, '=');
+		if (!p)
 			return (0);
-		x = _strdup(x + 1);
-		if (!x)
+		p = _strdup(p + 1);
+		if (!p)
 			return (0);
-		passInfo->arg_V[0] = x;
+		info->arg_V[0] = p;
 	}
 	return (1);
 }
 
 /**
- * rep_String - rep_String
- * @xx: var
- * @yy: var
- * Return: int
+ * replace_vars - replaces vars in the tokenized string
+ * @info: the parameter struct
+ *
+ * Return: 1 if replaced, 0 otherwise
  */
-int rep_String(char **xx, char *yy)
+int replace_vars(info_Pass *info)
 {
-	free(*xx);
-	*xx = yy;
-	return (1);
-}
+	int i = 0;
+	list_String *node;
 
-/**
- * rep_Variables - rep_Variables
- * @passInfo: var
- * Return: int
- */
-int rep_Variables(info_Pass *passInfo)
-{
-	int ii = 0;
-	list_String *n;
-
-	for (ii = 0; passInfo->arg_V[ii]; ii++)
+	for (i = 0; info->arg_V[i]; i++)
 	{
-		if (passInfo->arg_V[ii][0] != '$' || !passInfo->arg_V[ii][1])
+		if (info->arg_V[i][0] != '$' || !info->arg_V[i][1])
 			continue;
 
-		if (!_strcmp(passInfo->arg_V[ii], "$?"))
+		if (!_strcmp(info->arg_V[i], "$?"))
 		{
-			rep_String(&(passInfo->arg_V[ii]),
-				_strdup(convert_number(passInfo->sta_S, 10, 0)));
+			replace_string(&(info->arg_V[i]),
+				_strdup(convert_number(info->sta_S, 10, 0)));
 			continue;
 		}
-		if (!_strcmp(passInfo->arg_V[ii], "$$"))
+		if (!_strcmp(info->arg_V[i], "$$"))
 		{
-			rep_String(&(passInfo->arg_V[ii]),
+			replace_string(&(info->arg_V[i]),
 				_strdup(convert_number(getpid(), 10, 0)));
 			continue;
 		}
-		n = node_starts_with(passInfo->env_L, &passInfo->arg_V[ii][1], '=');
-		if (n)
+		node = node_starts_with(info->env_L, &info->arg_V[i][1], '=');
+		if (node)
 		{
-			rep_String(&(passInfo->arg_V[ii]),
-				_strdup(_strchr(n->st, '=') + 1));
+			replace_string(&(info->arg_V[i]),
+				_strdup(_strchr(node->st, '=') + 1));
 			continue;
 		}
-		rep_String(&passInfo->arg_V[ii], _strdup(""));
+		replace_string(&info->arg_V[i], _strdup(""));
 
 	}
 	return (0);
+}
+
+/**
+ * replace_string - replaces string
+ * @old: address of old string
+ * @new: new string
+ *
+ * Return: 1 if replaced, 0 otherwise
+ */
+int replace_string(char **old, char *new)
+{
+	free(*old);
+	*old = new;
+	return (1);
 }
