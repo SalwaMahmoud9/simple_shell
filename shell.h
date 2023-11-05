@@ -121,11 +121,11 @@ int _unenvFunc(info_Pass *, char *);
 int _stenvFunc(info_Pass *, char *, char *);
 
 /* chain.c */
-int is_chain(info_Pass *, char *, size_t *);
-void check_chain(info_Pass *, char *, size_t *, size_t, size_t);
-int replace_alias(info_Pass *);
-int replace_vars(info_Pass *);
-int replace_string(char **, char *);
+int check_Chain(info_Pass *, char *, size_t *);
+void checkChainF(info_Pass *, char *, size_t *, size_t, size_t);
+int rep_Alias(info_Pass *);
+int rep_Variables(info_Pass *);
+int rep_String(char **, char *);
 
 /* listString.c */
 list_String *add_node(list_String **, const char *, int);
