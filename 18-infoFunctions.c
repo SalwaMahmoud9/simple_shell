@@ -39,8 +39,8 @@ void set_info(info_Pass *info, char **av)
 			;
 		info->arg_C = i;
 
-		replace_alias(info);
-		replace_vars(info);
+		reAlias(info);
+		reVar(info);
 	}
 }
 
