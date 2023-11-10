@@ -27,10 +27,10 @@ void free_mylist(list_String **h_p)
  * plus_e_node - plus_e_node
  * @h: var
  * @st: var
- * @no: var
+ * @nu: var
  * Return: list_String
  */
-list_String *plus_e_node(list_String **h, const char *st, int no)
+list_String *plus_e_node(list_String **h, const char *st, int nu)
 {
 	list_String *n_n, *n;
 
@@ -42,7 +42,7 @@ list_String *plus_e_node(list_String **h, const char *st, int no)
 	if (!n_n)
 		return (NULL);
 	_memset((void *)n_n, 0, sizeof(list_String));
-	n_n->no = no;
+	n_n->no = nu;
 	if (st)
 	{
 		n_n->st = _strdup(st);
@@ -67,10 +67,10 @@ list_String *plus_e_node(list_String **h, const char *st, int no)
  * plus_node - plus_node
  * @h: var
  * @st: var
- * @no: var
+ * @nu: var
  * Return: list_String
  */
-list_String *plus_node(list_String **h, const char *st, int num)
+list_String *plus_node(list_String **h, const char *st, int nu)
 {
 	list_String *n_h;
 
@@ -80,7 +80,7 @@ list_String *plus_node(list_String **h, const char *st, int num)
 	if (!n_h)
 		return (NULL);
 	_memset((void *)n_h, 0, sizeof(list_String));
-	n_h->no = no;
+	n_h->no = nu;
 	if (st)
 	{
 		n_h->st = _strdup(st);
