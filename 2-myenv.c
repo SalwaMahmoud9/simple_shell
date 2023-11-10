@@ -9,7 +9,7 @@ char **getenvFunc(info_Pass *passInfo)
 {
 	if (!passInfo->environ || passInfo->env_C)
 	{
-		passInfo->environ = list_to_strings(passInfo->env_L);
+		passInfo->environ = list_strs(passInfo->env_L);
 		passInfo->env_C = 0;
 	}
 
@@ -36,7 +36,7 @@ int _unenvFunc(info_Pass *passInfo, char *v)
 		x = starts_with(listString_n->st, v);
 		if (x && *x == '=')
 		{
-			passInfo->env_C = delete_node_at_index(&(passInfo->env_L), ii);
+			passInfo->env_C = d_node_i(&(passInfo->env_L), ii);
 			ii = 0;
 			listString_n = passInfo->env_L;
 			continue;

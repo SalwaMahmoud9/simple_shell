@@ -17,8 +17,8 @@ int unAliasFunc(info_Pass *passInfo, char *ch)
 		return (1);
 	y = *x;
 	*x = 0;
-	rn = delete_node_at_index(&(passInfo->al_AI),
-		get_node_index(passInfo->al_AI, node_starts_with(passInfo->al_AI, ch, -1)));
+	rn = d_node_i(&(passInfo->al_AI),
+		node_index(passInfo->al_AI, start_node(passInfo->al_AI, ch, -1)));
 	*x = y;
 	return (rn);
 }
@@ -40,7 +40,7 @@ int sAliasFunc(info_Pass *passInfo, char *ch)
 		return (unAliasFunc(passInfo, ch));
 
 	unAliasFunc(passInfo, ch);
-	return (add_node_end(&(passInfo->al_AI), ch, 0) == NULL);
+	return (plus_e_node(&(passInfo->al_AI), ch, 0) == NULL);
 }
 
 /**
@@ -140,7 +140,7 @@ int _aliasFunc(info_Pass *passInfo)
 		if (x)
 			sAliasFunc(passInfo, passInfo->arg_V[i]);
 		else
-			pAliasFunc(node_starts_with(passInfo->al_AI, passInfo->arg_V[i], '='));
+			pAliasFunc(start_node(passInfo->al_AI, passInfo->arg_V[i], '='));
 	}
 
 	return (0);

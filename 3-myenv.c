@@ -11,7 +11,7 @@ int popenvFunc(info_Pass *passInfo)
 	size_t ii;
 
 	for (ii = 0; environ[ii]; ii++)
-		add_node_end(&listString_n, environ[ii], 0);
+		plus_e_node(&listString_n, environ[ii], 0);
 	passInfo->env_L = listString_n;
 	return (0);
 }
@@ -44,7 +44,7 @@ char *_getevFunc(info_Pass *passInfo, const char *name)
  */
 int _envFunc(info_Pass *passInfo)
 {
-	print_list_str(passInfo->env_L);
+	p_list_string(passInfo->env_L);
 	return (0);
 }
 
@@ -83,7 +83,7 @@ int _stenvFunc(info_Pass *passInfo, char *v, char *val)
 		}
 		listString_n = listString_n->nx;
 	}
-	add_node_end(&(passInfo->env_L), buff, 0);
+	plus_e_node(&(passInfo->env_L), buff, 0);
 	free(buff);
 	passInfo->env_C = 1;
 	return (0);

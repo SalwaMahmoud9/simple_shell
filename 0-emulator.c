@@ -50,6 +50,6 @@ int _helpFunc(info_Pass *passInfo)
  */
 int _historyFunc(info_Pass *passInfo)
 {
-	print_list(passInfo->his_T);
+	p_list(passInfo->his_T);
 	return (0);
 }

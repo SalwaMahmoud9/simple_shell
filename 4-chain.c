@@ -80,7 +80,7 @@ int reAlias(info_Pass *passInfo)
 
 	for (yy = 0; yy < 10; yy++)
 	{
-		nd = node_starts_with(passInfo->al_AI, passInfo->arg_V[0], '=');
+		nd = start_node(passInfo->al_AI, passInfo->arg_V[0], '=');
 		if (!nd)
 			return (0);
 		free(passInfo->arg_V[0]);
@@ -122,7 +122,7 @@ int reVar(info_Pass *passInfo)
 				_strdup(convert_number(getpid(), 10, 0)));
 			continue;
 		}
-		nd = node_starts_with(passInfo->env_L, &passInfo->arg_V[yy][1], '=');
+		nd = start_node(passInfo->env_L, &passInfo->arg_V[yy][1], '=');
 		if (nd)
 		{
 			reStr(&(passInfo->arg_V[yy]),

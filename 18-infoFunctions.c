@@ -59,11 +59,11 @@ void free_info(info_Pass *info, int all)
 		if (!info->cm_B)
 			free(info->arg_G);
 		if (info->env_L)
-			free_list(&(info->env_L));
+			free_mylist(&(info->env_L));
 		if (info->his_T)
-			free_list(&(info->his_T));
+			free_mylist(&(info->his_T));
 		if (info->al_AI)
-			free_list(&(info->al_AI));
+			free_mylist(&(info->al_AI));
 		ffree(info->environ);
 			info->environ = NULL;
 		bfree((void **)info->cm_B);

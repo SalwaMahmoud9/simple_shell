@@ -128,16 +128,16 @@ int reVar(info_Pass *);
 int reStr(char **, char *);
 
 /* listString.c */
-list_String *add_node(list_String **, const char *, int);
-list_String *add_node_end(list_String **, const char *, int);
-size_t print_list_str(const list_String *);
-int delete_node_at_index(list_String **, unsigned int);
-void free_list(list_String **);
-size_t list_len(const list_String *);
-char **list_to_strings(list_String *);
-size_t print_list(const list_String *);
-list_String *node_starts_with(list_String *, char *, char);
-ssize_t get_node_index(list_String *, list_String *);
+list_String *plus_node(list_String **, const char *, int);
+list_String *plus_e_node(list_String **, const char *, int);
+size_t p_list_string(const list_String *);
+int d_node_i(list_String **, unsigned int);
+void free_mylist(list_String **);
+size_t getListLength(const list_String *);
+char **list_strs(list_String *);
+size_t p_list(const list_String *);
+list_String *start_node(list_String *, char *, char);
+ssize_t node_index(list_String *, list_String *);
 
 /* genFunctions.c */
 int interactive(info_Pass *);

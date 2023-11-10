@@ -97,7 +97,7 @@ int read_history(info_Pass *info)
 	free(buf);
 	info->his_C = linecount;
 	while (info->his_C-- >= HISTORY_M)
-		delete_node_at_index(&(info->his_T), 0);
+		d_node_i(&(info->his_T), 0);
 	renumber_history(info);
 	return (info->his_C);
 }
@@ -116,7 +116,7 @@ int build_history_list(info_Pass *info, char *buf, int linecount)
 
 	if (info->his_T)
 		node = info->his_T;
-	add_node_end(&node, buf, linecount);
+	plus_e_node(&node, buf, linecount);
 
 	if (!info->his_T)
 		info->his_T = node;
