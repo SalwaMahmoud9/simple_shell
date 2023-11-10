@@ -104,7 +104,7 @@ size_t p_list(const list_String *h)
 
 	while (h)
 	{
-		_puts(convert_number(h->no, 10, 0));
+		_puts(change_num(h->no, 10, 0));
 		_putchar(':');
 		_putchar(' ');
 		_puts(h->st ? h->st : "(nil)");

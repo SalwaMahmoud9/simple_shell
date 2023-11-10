@@ -15,7 +15,7 @@ int hsh(info_Pass *info, char **av)
 	while (r != -1 && builtin_ret != -2)
 	{
 		clear_info(info);
-		if (interactive(info))
+		if (active(info))
 			_puts("$ ");
 		_eputchar(BUFFER_FLUSH);
 		r = get_input(info);
@@ -26,13 +26,13 @@ int hsh(info_Pass *info, char **av)
 			if (builtin_ret == -1)
 				find_cmd(info);
 		}
-		else if (interactive(info))
+		else if (active(info))
 			_putchar('\n');
 		free_info(info, 0);
 	}
 	write_history(info);
 	free_info(info, 1);
-	if (!interactive(info) && info->sta_S)
+	if (!active(info) && info->sta_S)
 		exit(info->sta_S);
 	if (builtin_ret == -2)
 	{
@@ -95,7 +95,7 @@ void find_cmd(info_Pass *info)
 		info->flag_C = 0;
 	}
 	for (i = 0, k = 0; info->arg_G[i]; i++)
-		if (!is_delim(info->arg_G[i], " \t\n"))
+		if (!check_del(info->arg_G[i], " \t\n"))
 			k++;
 	if (!k)
 		return;
@@ -108,13 +108,13 @@ void find_cmd(info_Pass *info)
 	}
 	else
 	{
-		if ((interactive(info) || _getevFunc(info, "PATH=")
+		if ((active(info) || _getevFunc(info, "PATH=")
 			|| info->arg_V[0][0] == '/') && is_cmd(info, info->arg_V[0]))
 			fork_cmd(info);
 		else if (*(info->arg_G) != '\n')
 		{
 			info->sta_S = 127;
-			print_error(info, "not found\n");
+			p_err(info, "not found\n");
 		}
 	}
 }
@@ -154,7 +154,7 @@ void fork_cmd(info_Pass *info)
 		{
 			info->sta_S = WEXITSTATUS(info->sta_S);
 			if (info->sta_S == 126)
-				print_error(info, "Permission denied\n");
+				p_err(info, "Permission denied\n");
 		}
 	}
 }

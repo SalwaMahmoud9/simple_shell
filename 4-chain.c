@@ -113,13 +113,13 @@ int reVar(info_Pass *passInfo)
 		if (!_strcmp(passInfo->arg_V[yy], "$?"))
 		{
 			reStr(&(passInfo->arg_V[yy]),
-				_strdup(convert_number(passInfo->sta_S, 10, 0)));
+				_strdup(change_num(passInfo->sta_S, 10, 0)));
 			continue;
 		}
 		if (!_strcmp(passInfo->arg_V[yy], "$$"))
 		{
 			reStr(&(passInfo->arg_V[yy]),
-				_strdup(convert_number(getpid(), 10, 0)));
+				_strdup(change_num(getpid(), 10, 0)));
 			continue;
 		}
 		nd = start_node(passInfo->env_L, &passInfo->arg_V[yy][1], '=');

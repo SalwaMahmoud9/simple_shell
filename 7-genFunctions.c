@@ -1,74 +1,72 @@
 #include "shell.h"
 
 /**
- * interactive - returns true if shell is interactive mode
- * @info: struct address
- *
- * Return: 1 if interactive mode, 0 otherwise
+ * active - active
+ * @infoPass: var
+ * Return: int
  */
-int interactive(info_Pass *info)
+int active(info_Pass *infoPass)
 {
-	return (isatty(STDIN_FILENO) && info->fd_R <= 2);
+	return (isatty(STDIN_FILENO) && infoPass->fd_R <= 2);
 }
 
 /**
- * is_delim - checks if character is a delimeter
- * @c: the char to check
- * @delim: the delimeter string
- * Return: 1 if true, 0 if false
+ * check_del - check_del
+ * @ch: var
+ * @del: var
+ * Return: int
  */
-int is_delim(char c, char *delim)
+int check_del(char ch, char *del)
 {
-	while (*delim)
-		if (*delim++ == c)
+	while (*del)
+		if (*del++ == ch)
 			return (1);
 	return (0);
 }
 
 /**
- *_isalpha - checks for alphabetic character
- *@c: The character to input
- *Return: 1 if c is alphabetic, 0 otherwise
+ *_atoi - _atoi
+ *@ch: var
+ *Return: int
  */
-
-int _isalpha(int c)
+int _atoi(char *ch)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1);
+	unsigned int res = 0;
+	int ii, sn = 1, fg = 0, op;
+
+	for (ii = 0;  ch[ii] != '\0' && fg != 2; ii++)
+	{
+		if (ch[ii] == '-')
+			sn *= -1;
+
+		if (ch[ii] >= '0' && ch[ii] <= '9')
+		{
+			fg = 1;
+			res *= 10;
+			res += (ch[ii] - '0');
+		}
+		else if (fg == 1)
+			fg = 2;
+	}
+
+	if (sn == -1)
+		op = -res;
 	else
-		return (0);
+		op = res;
+
+	return (op);
 }
 
 /**
- *_atoi - converts a string to an integer
- *@s: the string to be converted
- *Return: 0 if no numbers in string, converted number otherwise
+ *_alpha - _alpha
+ *@ch: var
+ *Return: var
  */
 
-int _atoi(char *s)
+int _alpha(int ch)
 {
-	int i, sign = 1, flag = 0, output;
-	unsigned int result = 0;
-
-	for (i = 0;  s[i] != '\0' && flag != 2; i++)
-	{
-		if (s[i] == '-')
-			sign *= -1;
-
-		if (s[i] >= '0' && s[i] <= '9')
-		{
-			flag = 1;
-			result *= 10;
-			result += (s[i] - '0');
-		}
-		else if (flag == 1)
-			flag = 2;
-	}
-
-	if (sign == -1)
-		output = -result;
+	if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))
+		return (1);
 	else
-		output = result;
-
-	return (output);
+		return (0);
 }

@@ -140,15 +140,15 @@ list_String *start_node(list_String *, char *, char);
 ssize_t node_index(list_String *, list_String *);
 
 /* genFunctions.c */
-int interactive(info_Pass *);
-int is_delim(char, char *);
-int _isalpha(int);
+int active(info_Pass *);
+int check_del(char, char *);
+int _alpha(int);
 int _atoi(char *);
-int _erratoi(char *);
-void print_error(info_Pass *, char *);
-int print_d(int, int);
-char *convert_number(long int, int, int);
-void remove_comments(char *);
+int _atoierror(char *);
+void p_err(info_Pass *, char *);
+int print_var(int, int);
+char *change_num(long int, int, int);
+void del_comm(char *);
 
 /* memoFunctions */
 char *_memset(char *, char, unsigned int);

@@ -11,16 +11,16 @@ int _exitFunc(info_Pass *passInfo)
 
 	if (passInfo->arg_V[1])
 	{
-		exitVar = _erratoi(passInfo->arg_V[1]);
+		exitVar = _atoierror(passInfo->arg_V[1]);
 		if (exitVar == -1)
 		{
 			passInfo->sta_S = 2;
-			print_error(passInfo, "error number: ");
+			p_err(passInfo, "error number: ");
 			_eputs(passInfo->arg_V[1]);
 			_eputchar('\n');
 			return (1);
 		}
-		passInfo->error_N = _erratoi(passInfo->arg_V[1]);
+		passInfo->error_N = _atoierror(passInfo->arg_V[1]);
 		return (-2);
 	}
 	passInfo->error_N = -1;
