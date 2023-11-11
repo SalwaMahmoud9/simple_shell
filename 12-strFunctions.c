@@ -25,21 +25,21 @@ char *_strchr(char *xs, char yc)
  */
 char *_strncat(char *x, char *y, int ln)
 {
-	int i, j;
+	int ii, jj;
 	char *xs = x;
 
-	i = 0;
-	j = 0;
-	while (x[i] != '\0')
-		i++;
-	while (y[j] != '\0' && j < ln)
+	ii = 0;
+	jj = 0;
+	while (x[ii] != '\0')
+		ii++;
+	while (y[jj] != '\0' && jj < ln)
 	{
-		x[i] = y[j];
-		i++;
-		j++;
+		x[ii] = y[jj];
+		ii++;
+		jj++;
 	}
-	if (j < ln)
-		x[i] = '\0';
+	if (jj < ln)
+		x[ii] = '\0';
 	return (xs);
 }
 
@@ -55,19 +55,19 @@ char *_stringcpy(char *x, char *y, int ln)
 	char *xs = x;
 	int ii, jj;
 
-	i = 0;
-	while (y[i] != '\0' && i < ln - 1)
+	ii = 0;
+	while (y[ii] != '\0' && ii < ln - 1)
 	{
-		x[i] = y[i];
-		i++;
+		x[ii] = y[ii];
+		ii++;
 	}
-	if (i < ln)
+	if (ii < ln)
 	{
-		j = i;
-		while (j < ln)
+		jj = ii;
+		while (jj < ln)
 		{
-			x[j] = '\0';
-			j++;
+			x[jj] = '\0';
+			jj++;
 		}
 	}
 	return (xs);

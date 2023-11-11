@@ -64,7 +64,7 @@ int _lengthstring(char *ss)
  * @y: var
  * Return: char
  */
-char *st_wth(const char *x, const char *needle)
+char *st_wth(const char *x, const char *y)
 {
 	while (*y)
 		if (*y++ != *x++)
