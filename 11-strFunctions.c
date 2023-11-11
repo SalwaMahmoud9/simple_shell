@@ -1,87 +1,82 @@
 #include "shell.h"
 
 /**
- * _strcpy - copies a string
- * @dest: the destination
- * @src: the source
- *
- * Return: pointer to destination
- */
-char *_strcpy(char *dest, char *src)
-{
-	int i = 0;
-
-	if (dest == src || src == 0)
-		return (dest);
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = 0;
-	return (dest);
-}
-
-/**
- * _strdup - duplicates a string
- * @str: the string to duplicate
- *
- * Return: pointer to the duplicated string
- */
-char *_strdup(const char *str)
-{
-	int length = 0;
-	char *ret;
-
-	if (str == NULL)
-		return (NULL);
-	while (*str++)
-		length++;
-	ret = malloc(sizeof(char) * (length + 1));
-	if (!ret)
-		return (NULL);
-	for (length++; length--;)
-		ret[length] = *--str;
-	return (ret);
-}
-
-/**
- *_puts - prints an input string
- *@str: the string to be printed
- *
- * Return: Nothing
- */
-void _puts(char *str)
-{
-	int i = 0;
-
-	if (!str)
-		return;
-	while (str[i] != '\0')
-	{
-		_putchar(str[i]);
-		i++;
-	}
-}
-
-/**
- * _putchar - writes the character c to stdout
- * @c: The character to print
- *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * _putchar -_putchar
+ * @c: var
+ * Return: int
  */
 int _putchar(char c)
 {
-	static int i;
 	static char buf[W_BUFFER_S];
+	static int ii;
 
-	if (c == BUFFER_FLUSH || i >= W_BUFFER_S)
+	if (c == BUFFER_FLUSH || ii >= W_BUFFER_S)
 	{
-		write(1, buf, i);
-		i = 0;
+		write(1, buf, ii);
+		ii = 0;
 	}
 	if (c != BUFFER_FLUSH)
-		buf[i++] = c;
+		buf[ii++] = c;
 	return (1);
+}
+
+/**
+ * _stringduplicate - _stringduplicate
+ * @s: var
+ * Return: char
+ */
+char *_stringduplicate(const char *s)
+{
+	char *res;
+	int ln = 0;
+
+	if (s == NULL)
+		return (NULL);
+	while (*s++)
+		ln++;
+	res = malloc(sizeof(char) * (ln + 1));
+	if (!res)
+		return (NULL);
+	for (ln++; ln--;)
+		res[ln] = *--s;
+	return (res);
+}
+
+/**
+ * _stringcopy - _stringcopy
+ * @x: var
+ * @y: var
+ * Return: char
+ */
+char *_stringcopy(char *x, char *y)
+{
+	int ii = 0;
+
+	if (x == y || y == 0)
+		return (x);
+	while (y[ii])
+	{
+		x[ii] = y[ii];
+		ii++;
+	}
+	x[ii] = 0;
+	return (x);
+}
+
+/**
+ *_puts - _puts
+ *@s: var
+ * Return: void
+ */
+void _puts(char *s)
+{
+	int ii = 0;
+
+	if (!s)
+		return;
+	while (s[ii] != '\0')
+	{
+		_putchar(s[ii]);
+		ii++;
+	}
 }

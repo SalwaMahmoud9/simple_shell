@@ -157,15 +157,15 @@ void *_relocation(void *, unsigned int, unsigned int);
 int bfree(void **);
 
 /* strFunctions.c */
-int _strlen(char *);
-int _strcmp(char *, char *);
-char *starts_with(const char *, const char *);
-char *_strcat(char *, char *);
-char *_strcpy(char *, char *);
-char *_strdup(const char *);
+int _lengthstring(char *);
+int _comparestring(char *, char *);
+char *st_wth(const char *, const char *);
+char *_stringcat(char *, char *);
+char *_stringcopy(char *, char *);
+char *_stringduplicate(const char *);
 void _puts(char *);
 int _putchar(char);
-char *_strncpy(char *, char *, int);
+char *_stringcpy(char *, char *, int);
 char *_strncat(char *, char *, int);
 char *_strchr(char *, char);
 char **strtow(char *, char *);

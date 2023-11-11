@@ -68,7 +68,7 @@ int find_builtin(info_Pass *info)
 	};
 
 	for (i = 0; builtintbl[i].strType; i++)
-		if (_strcmp(info->arg_V[0], builtintbl[i].strType) == 0)
+		if (_comparestring(info->arg_V[0], builtintbl[i].strType) == 0)
 		{
 			info->error_C++;
 			built_in_ret = builtintbl[i].f(info);

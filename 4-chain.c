@@ -87,7 +87,7 @@ int reAlias(info_Pass *passInfo)
 		xx = _strchr(nd->st, '=');
 		if (!xx)
 			return (0);
-		xx = _strdup(xx + 1);
+		xx = _stringduplicate(xx + 1);
 		if (!xx)
 			return (0);
 		passInfo->arg_V[0] = xx;
@@ -110,26 +110,26 @@ int reVar(info_Pass *passInfo)
 		if (passInfo->arg_V[yy][0] != '$' || !passInfo->arg_V[yy][1])
 			continue;
 
-		if (!_strcmp(passInfo->arg_V[yy], "$?"))
+		if (!_comparestring(passInfo->arg_V[yy], "$?"))
 		{
 			reStr(&(passInfo->arg_V[yy]),
-				_strdup(change_num(passInfo->sta_S, 10, 0)));
+				_stringduplicate(change_num(passInfo->sta_S, 10, 0)));
 			continue;
 		}
-		if (!_strcmp(passInfo->arg_V[yy], "$$"))
+		if (!_comparestring(passInfo->arg_V[yy], "$$"))
 		{
 			reStr(&(passInfo->arg_V[yy]),
-				_strdup(change_num(getpid(), 10, 0)));
+				_stringduplicate(change_num(getpid(), 10, 0)));
 			continue;
 		}
 		nd = start_node(passInfo->env_L, &passInfo->arg_V[yy][1], '=');
 		if (nd)
 		{
 			reStr(&(passInfo->arg_V[yy]),
-				_strdup(_strchr(nd->st, '=') + 1));
+				_stringduplicate(_strchr(nd->st, '=') + 1));
 			continue;
 		}
-		reStr(&passInfo->arg_V[yy], _strdup(""));
+		reStr(&passInfo->arg_V[yy], _stringduplicate(""));
 
 	}
 	return (0);

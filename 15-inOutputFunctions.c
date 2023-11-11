@@ -14,13 +14,13 @@ char *get_history_file(info_Pass *info)
 	dir = _getevFunc(info, "HOME=");
 	if (!dir)
 		return (NULL);
-	buf = malloc(sizeof(char) * (_strlen(dir) + _strlen(HISTORY_F) + 2));
+	buf = malloc(sizeof(char) * (_lengthstring(dir) + _lengthstring(HISTORY_F) + 2));
 	if (!buf)
 		return (NULL);
 	buf[0] = 0;
-	_strcpy(buf, dir);
-	_strcat(buf, "/");
-	_strcat(buf, HISTORY_F);
+	_stringcopy(buf, dir);
+	_stringcat(buf, "/");
+	_stringcat(buf, HISTORY_F);
 	return (buf);
 }
 

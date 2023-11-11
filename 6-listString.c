@@ -39,7 +39,7 @@ char **list_strs(list_String *h)
 		return (NULL);
 	for (ii = 0; n; n = n->nx, ii++)
 	{
-		str = malloc(_strlen(n->st) + 1);
+		str = malloc(_lengthstring(n->st) + 1);
 		if (!str)
 		{
 			for (jj = 0; jj < ii; jj++)
@@ -48,7 +48,7 @@ char **list_strs(list_String *h)
 			return (NULL);
 		}
 
-		str = _strcpy(str, n->st);
+		str = _stringcopy(str, n->st);
 		strs[ii] = str;
 	}
 	strs[ii] = NULL;
@@ -85,7 +85,7 @@ list_String *start_node(list_String *n, char *pre, char c)
 
 	while (n)
 	{
-		p = starts_with(n->st, pre);
+		p = st_wth(n->st, pre);
 		if (p && ((c == -1) || (*p == c)))
 			return (n);
 		n = n->nx;

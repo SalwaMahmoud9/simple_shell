@@ -29,7 +29,7 @@ char *_getevFunc(info_Pass *passInfo, const char *name)
 
 	while (listString_n)
 	{
-		x = starts_with(listString_n->st, name);
+		x = st_wth(listString_n->st, name);
 		if (x && *x)
 			return (x);
 		listString_n = listString_n->nx;
@@ -64,16 +64,16 @@ int _stenvFunc(info_Pass *passInfo, char *v, char *val)
 	if (!v || !val)
 		return (0);
 
-	buff = malloc(_strlen(v) + _strlen(val) + 2);
+	buff = malloc(_lengthstring(v) + _lengthstring(val) + 2);
 	if (!buff)
 		return (1);
-	_strcpy(buff, v);
-	_strcat(buff, "=");
-	_strcat(buff, val);
+	_stringcopy(buff, v);
+	_stringcat(buff, "=");
+	_stringcat(buff, val);
 	listString_n = passInfo->env_L;
 	while (listString_n)
 	{
-		x = starts_with(listString_n->st, v);
+		x = st_wth(listString_n->st, v);
 		if (x && *x == '=')
 		{
 			free(listString_n->st);

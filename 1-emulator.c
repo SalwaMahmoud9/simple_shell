@@ -64,7 +64,7 @@ int _changeDirFunc(info_Pass *passInfo)
 		else
 			chd = chdir(dic);
 	}
-	else if (_strcmp(passInfo->arg_V[1], "-") == 0)
+	else if (_comparestring(passInfo->arg_V[1], "-") == 0)
 	{
 		if (!_getevFunc(passInfo, "OLDPWD="))
 		{

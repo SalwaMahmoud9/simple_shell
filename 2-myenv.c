@@ -33,7 +33,7 @@ int _unenvFunc(info_Pass *passInfo, char *v)
 
 	while (listString_n)
 	{
-		x = starts_with(listString_n->st, v);
+		x = st_wth(listString_n->st, v);
 		if (x && *x == '=')
 		{
 			passInfo->env_C = d_node_i(&(passInfo->env_L), ii);

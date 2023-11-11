@@ -82,7 +82,7 @@ ssize_t get_input(info_Pass *info)
 		}
 
 		*buf_p = p; /* pass back pointer to current command position */
-		return (_strlen(p)); /* return length of current command */
+		return (_lengthstring(p)); /* return length of current command */
 	}
 
 	*buf_p = buf; /* else not a chain, pass back buffer from _getline() */
@@ -144,7 +144,7 @@ int _getline(info_Pass *info, char **ptr, size_t *length)
 	if (s)
 		_strncat(new_p, buf + i, k - i);
 	else
-		_strncpy(new_p, buf + i, k - i + 1);
+		_stringcpy(new_p, buf + i, k - i + 1);
 
 	s += k - i;
 	i = k;

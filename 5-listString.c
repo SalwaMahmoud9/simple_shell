@@ -45,7 +45,7 @@ list_String *plus_e_node(list_String **h, const char *st, int nu)
 	n_n->no = nu;
 	if (st)
 	{
-		n_n->st = _strdup(st);
+		n_n->st = _stringduplicate(st);
 		if (!n_n->st)
 		{
 			free(n_n);
@@ -83,7 +83,7 @@ list_String *plus_node(list_String **h, const char *st, int nu)
 	n_h->no = nu;
 	if (st)
 	{
-		n_h->st = _strdup(st);
+		n_h->st = _stringduplicate(st);
 		if (!n_h->st)
 		{
 			free(n_h);

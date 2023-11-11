@@ -31,7 +31,7 @@ void set_info(info_Pass *info, char **av)
 			info->arg_V = malloc(sizeof(char *) * 2);
 			if (info->arg_V)
 			{
-				info->arg_V[0] = _strdup(info->arg_G);
+				info->arg_V[0] = _stringduplicate(info->arg_G);
 				info->arg_V[1] = NULL;
 			}
 		}
