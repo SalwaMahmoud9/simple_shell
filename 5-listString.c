@@ -41,7 +41,7 @@ list_String *plus_e_node(list_String **h, const char *st, int nu)
 	n_n = malloc(sizeof(list_String));
 	if (!n_n)
 		return (NULL);
-	_memset((void *)n_n, 0, sizeof(list_String));
+	_setmemory((void *)n_n, 0, sizeof(list_String));
 	n_n->no = nu;
 	if (st)
 	{
@@ -79,7 +79,7 @@ list_String *plus_node(list_String **h, const char *st, int nu)
 	n_h = malloc(sizeof(list_String));
 	if (!n_h)
 		return (NULL);
-	_memset((void *)n_h, 0, sizeof(list_String));
+	_setmemory((void *)n_h, 0, sizeof(list_String));
 	n_h->no = nu;
 	if (st)
 	{

@@ -151,9 +151,9 @@ char *change_num(long int, int, int);
 void del_comm(char *);
 
 /* memoFunctions */
-char *_memset(char *, char, unsigned int);
-void ffree(char **);
-void *_realloc(void *, unsigned int, unsigned int);
+char *_setmemory(char *, char, unsigned int);
+void freePointer(char **);
+void *_relocation(void *, unsigned int, unsigned int);
 int bfree(void **);
 
 /* strFunctions.c */

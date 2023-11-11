@@ -1,62 +1,78 @@
 #include "shell.h"
 
 /**
- **_memset - fills memory with a constant byte
- *@s: the pointer to the memory area
- *@b: the byte to fill *s with
- *@n: the amount of bytes to be filled
- *Return: (s) a pointer to the memory area s
+ * _relocation - _relocation
+ * @pn: var
+ * @os: var
+ * @ns: var
+ * Return: void
  */
-char *_memset(char *s, char b, unsigned int n)
+void *_relocation(void *pn, unsigned int os, unsigned int ns)
 {
-	unsigned int i;
+	char *ptr;
 
-	for (i = 0; i < n; i++)
-		s[i] = b;
-	return (s);
+	if (!pn)
+		return (malloc(ns));
+	if (!ns)
+		return (free(pn), NULL);
+	if (ns == os)
+		return (pn);
+
+	ptr = malloc(ns);
+	if (!ptr)
+		return (NULL);
+
+	os = os < ns ? os : ns;
+	while (os--)
+		ptr[os] = ((char *)pn)[os];
+	free(pn);
+	return (ptr);
 }
 
 /**
- * ffree - frees a string of strings
- * @pp: string of strings
+ * freePointer - freePointer
+ * @pp: var
+ * Return: void
  */
-void ffree(char **pp)
+void freePointer(char **pp)
 {
-	char **a = pp;
+	char **x = pp;
 
 	if (!pp)
 		return;
 	while (*pp)
 		free(*pp++);
-	free(a);
+	free(x);
 }
 
 /**
- * _realloc - reallocates a block of memory
- * @ptr: pointer to previous malloc'ated block
- * @old_size: byte size of previous block
- * @new_size: byte size of new block
- *
- * Return: pointer to da ol'block nameen.
+ **_setmemory - _setmemory
+ *@x: var
+ *@y: var
+ *@num: var
+ *Return: char
  */
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+char *_setmemory(char *x, char y, unsigned int num)
 {
-	char *p;
+	unsigned int i;
 
-	if (!ptr)
-		return (malloc(new_size));
-	if (!new_size)
-		return (free(ptr), NULL);
-	if (new_size == old_size)
-		return (ptr);
+	for (i = 0; i < num; i++)
+		x[i] = y;
+	return (x);
+}
 
-	p = malloc(new_size);
-	if (!p)
-		return (NULL);
-
-	old_size = old_size < new_size ? old_size : new_size;
-	while (old_size--)
-		p[old_size] = ((char *)ptr)[old_size];
-	free(ptr);
-	return (p);
+/**
+ * bfree - bfree
+ * @p: var
+ * Return: int
+ */
+int bfree(void **p)
+{
+	if (p && *p)
+	{
+		free(*p);
+		*p = NULL;
+		return (1);
+	}
+	return (0);
 }

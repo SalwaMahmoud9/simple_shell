@@ -51,7 +51,7 @@ void set_info(info_Pass *info, char **av)
  */
 void free_info(info_Pass *info, int all)
 {
-	ffree(info->arg_V);
+	freePointer(info->arg_V);
 	info->arg_V = NULL;
 	info->string_P = NULL;
 	if (all)
@@ -64,7 +64,7 @@ void free_info(info_Pass *info, int all)
 			free_mylist(&(info->his_T));
 		if (info->al_AI)
 			free_mylist(&(info->al_AI));
-		ffree(info->environ);
+		freePointer(info->environ);
 			info->environ = NULL;
 		bfree((void **)info->cm_B);
 		if (info->fd_R > 2)
