@@ -10,7 +10,7 @@
 ssize_t set_buffer(info_Pass *passInfo, char **b, size_t *l)
 {
 	size_t l_p = 0;
-	ssize_t r = 0;
+	ssize_t x = 0;
 
 	if (!*l) 
 	{
@@ -99,10 +99,10 @@ ssize_t readb(info_Pass *passInfo, char *b, size_t *ii)
 
 	if (*ii)
 		return (0);
-	r = read(passInfo->fd_R, b, R_BUFFER_S);
-	if (r >= 0)
-		*ii = r;
-	return (r);
+	x = read(passInfo->fd_R, b, R_BUFFER_S);
+	if (x >= 0)
+		*ii = x;
+	return (x);
 }
 
 /**
@@ -116,7 +116,7 @@ int _getline(info_Pass *passInfo, char **pr, size_t *lth)
 {
 	static char b[R_BUFFER_S];
 	size_t k;
-	ssize_t r = 0, s = 0;
+	ssize_t x = 0, s = 0;
 	static size_t ii, l;
 	char *p = NULL, *new_p = NULL, *c;
 
@@ -126,8 +126,8 @@ int _getline(info_Pass *passInfo, char **pr, size_t *lth)
 	if (ii == l)
 		ii = l = 0;
 
-	r = readb(passInfo, b, &l);
-	if (r == -1 || (r == 0 && l == 0))
+	x = readb(passInfo, b, &l);
+	if (x == -1 || (x == 0 && l == 0))
 		return (-1);
 
 	c = _strchr(b + ii, '\n');
