@@ -1,94 +1,96 @@
 #include "shell.h"
 
 /**
- * **strtow - splits a string into words. Repeat delimiters are ignored
- * @str: the input string
- * @d: the delimeter string
- * Return: a pointer to an array of strings, or NULL on failure
+ * **stringToWordCh - stringToWordCh
+ * @sr: var
+ * @ch: var
+ * Return: char
  */
-
-char **strtow(char *str, char *d)
+char **stringToWordCh(char *sr, char ch)
 {
-	int i, j, k, m, numwords = 0;
-	char **s;
+	int ii, jj;
+	int x, y, noW = 0;
+	char **z;
 
-	if (str == NULL || str[0] == 0)
+	if (sr == NULL || sr[0] == 0)
 		return (NULL);
-	if (!d)
-		d = " ";
-	for (i = 0; str[i] != '\0'; i++)
-		if (!check_del(str[i], d) && (check_del(str[i + 1], d) || !str[i + 1]))
-			numwords++;
-
-	if (numwords == 0)
+	for (ii = 0; sr[ii] != '\0'; ii++)
+		if ((sr[ii] != ch && sr[ii + 1] == ch) ||
+		    (sr[ii] != ch && !sr[ii + 1]) || sr[ii + 1] == ch)
+			noW++;
+	if (noW == 0)
 		return (NULL);
-	s = malloc((1 + numwords) * sizeof(char *));
-	if (!s)
+	z = malloc((1 + noW) * sizeof(char *));
+	if (!z)
 		return (NULL);
-	for (i = 0, j = 0; j < numwords; j++)
+	for (ii = 0, jj = 0; jj < noW; jj++)
 	{
-		while (check_del(str[i], d))
-			i++;
-		k = 0;
-		while (!check_del(str[i + k], d) && str[i + k])
-			k++;
-		s[j] = malloc((k + 1) * sizeof(char));
-		if (!s[j])
+		while (sr[ii] == ch && sr[ii] != ch)
+			ii++;
+		x = 0;
+		while (sr[ii + x] != ch && sr[ii + x] && sr[ii + x] != ch)
+			x++;
+		z[jj] = malloc((x + 1) * sizeof(char));
+		if (!z[jj])
 		{
-			for (k = 0; k < j; k++)
-				free(s[k]);
-			free(s);
+			for (x = 0; x < jj; x++)
+				free(z[x]);
+			free(z);
 			return (NULL);
 		}
-		for (m = 0; m < k; m++)
-			s[j][m] = str[i++];
-		s[j][m] = 0;
+		for (y = 0; y < x; y++)
+			z[jj][y] = sr[ii++];
+		z[jj][y] = 0;
 	}
-	s[j] = NULL;
-	return (s);
+	z[jj] = NULL;
+	return (z);
 }
 
 /**
- * **strtow2 - splits a string into words
- * @str: the input string
- * @d: the delimeter
- * Return: a pointer to an array of strings, or NULL on failure
+ * **stringToWord - stringToWord
+ * @sr: var
+ * @ch: var
+ * Return: char
  */
-char **strtow2(char *str, char d)
-{
-	int i, j, k, m, numwords = 0;
-	char **s;
 
-	if (str == NULL || str[0] == 0)
+char **stringToWord(char *sr, char *ch)
+{
+	int ii, jj;
+	int x, y, noW = 0;
+	char **z;
+
+	if (sr == NULL || sr[0] == 0)
 		return (NULL);
-	for (i = 0; str[i] != '\0'; i++)
-		if ((str[i] != d && str[i + 1] == d) ||
-		    (str[i] != d && !str[i + 1]) || str[i + 1] == d)
-			numwords++;
-	if (numwords == 0)
+	if (!ch)
+		ch = " ";
+	for (ii = 0; sr[ii] != '\0'; ii++)
+		if (!check_del(sr[ii], ch) && (check_del(sr[ii + 1], ch) || !sr[ii + 1]))
+			noW++;
+
+	if (noW == 0)
 		return (NULL);
-	s = malloc((1 + numwords) * sizeof(char *));
-	if (!s)
+	z = malloc((1 + noW) * sizeof(char *));
+	if (!z)
 		return (NULL);
-	for (i = 0, j = 0; j < numwords; j++)
+	for (ii = 0, jj = 0; jj < noW; jj++)
 	{
-		while (str[i] == d && str[i] != d)
-			i++;
-		k = 0;
-		while (str[i + k] != d && str[i + k] && str[i + k] != d)
-			k++;
-		s[j] = malloc((k + 1) * sizeof(char));
-		if (!s[j])
+		while (check_del(sr[ii], ch))
+			ii++;
+		x = 0;
+		while (!check_del(sr[ii + x], ch) && sr[ii + x])
+			x++;
+		z[jj] = malloc((x + 1) * sizeof(char));
+		if (!z[jj])
 		{
-			for (k = 0; k < j; k++)
-				free(s[k]);
-			free(s);
+			for (x = 0; x < jj; x++)
+				free(z[x]);
+			free(z);
 			return (NULL);
 		}
-		for (m = 0; m < k; m++)
-			s[j][m] = str[i++];
-		s[j][m] = 0;
+		for (y = 0; y < x; y++)
+			z[jj][y] = sr[ii++];
+		z[jj][y] = 0;
 	}
-	s[j] = NULL;
-	return (s);
+	z[jj] = NULL;
+	return (z);
 }

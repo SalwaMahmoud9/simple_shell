@@ -1,85 +1,81 @@
 #include "shell.h"
 
-/**
- *_eputs - prints an input string
- * @str: the string to be printed
- *
- * Return: Nothing
- */
-void _eputs(char *str)
-{
-	int i = 0;
-
-	if (!str)
-		return;
-	while (str[i] != '\0')
-	{
-		_eputchar(str[i]);
-		i++;
-	}
-}
 
 /**
- * _eputchar - writes the character c to stderr
- * @c: The character to print
- *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * _putF - _putF
+ * @ch: var
+ * @f: var
+ * Return : int
  */
-int _eputchar(char c)
+int _putF(char ch, int f)
 {
-	static int i;
-	static char buf[W_BUFFER_S];
+	static int ii;
+	static char b[W_BUFFER_S];
 
-	if (c == BUFFER_FLUSH || i >= W_BUFFER_S)
+	if (ch == BUFFER_FLUSH || ii >= W_BUFFER_S)
 	{
-		write(2, buf, i);
-		i = 0;
+		write(f, b, ii);
+		ii = 0;
 	}
-	if (c != BUFFER_FLUSH)
-		buf[i++] = c;
+	if (ch != BUFFER_FLUSH)
+		b[ii++] = ch;
 	return (1);
 }
 
 /**
- * _putfd - writes the character c to given fd
- * @c: The character to print
- * @fd: The filedescriptor to write to
- *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ *_putFD - _putFD
+ * @sr: var
+ * @f: var
+ * Return: int
  */
-int _putfd(char c, int fd)
+int _putFD(char *sr, int f)
 {
-	static int i;
-	static char buf[W_BUFFER_S];
+	int ii = 0;
 
-	if (c == BUFFER_FLUSH || i >= W_BUFFER_S)
-	{
-		write(fd, buf, i);
-		i = 0;
-	}
-	if (c != BUFFER_FLUSH)
-		buf[i++] = c;
-	return (1);
-}
-
-/**
- *_putsfd - prints an input string
- * @str: the string to be printed
- * @fd: the filedescriptor to write to
- *
- * Return: the number of chars put
- */
-int _putsfd(char *str, int fd)
-{
-	int i = 0;
-
-	if (!str)
+	if (!sr)
 		return (0);
-	while (*str)
+	while (*sr)
 	{
-		i += _putfd(*str++, fd);
+		ii += _putF(*sr++, f);
 	}
-	return (i);
+	return (ii);
+}
+
+/**
+ * _putC - _putC
+ * @ch: var
+ * Return: int
+ */
+int _putC(char ch)
+{
+	static char b[W_BUFFER_S];
+	static int ii;
+
+	if (ch == BUFFER_FLUSH || ii >= W_BUFFER_S)
+	{
+		write(2, b, ii);
+		ii = 0;
+	}
+	if (ch != BUFFER_FLUSH)
+		b[ii++] = ch;
+	return (1);
+}
+
+
+/**
+ *_put - _put
+ * @sr: var
+ * Return: void
+ */
+void _put(char *sr)
+{
+	int ii = 0;
+
+	if (!sr)
+		return;
+	while (sr[ii] != '\0')
+	{
+		_putC(sr[ii]);
+		ii++;
+	}
 }

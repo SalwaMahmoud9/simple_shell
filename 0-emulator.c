@@ -16,8 +16,8 @@ int _exitFunc(info_Pass *passInfo)
 		{
 			passInfo->sta_S = 2;
 			p_err(passInfo, "error number: ");
-			_eputs(passInfo->arg_V[1]);
-			_eputchar('\n');
+			_put(passInfo->arg_V[1]);
+			_putC('\n');
 			return (1);
 		}
 		passInfo->error_N = _atoierror(passInfo->arg_V[1]);

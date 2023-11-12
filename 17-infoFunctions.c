@@ -24,7 +24,7 @@ void set_info(info_Pass *info, char **av)
 	info->name_F = av[0];
 	if (info->arg_G)
 	{
-		info->arg_V = strtow(info->arg_G, " \t");
+		info->arg_V = stringToWord(info->arg_G, " \t");
 		if (!info->arg_V)
 		{
 

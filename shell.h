@@ -168,14 +168,14 @@ int _putchar(char);
 char *_stringcpy(char *, char *, int);
 char *_strncat(char *, char *, int);
 char *_strchr(char *, char);
-char **strtow(char *, char *);
-char **strtow2(char *, char);
+char **stringToWord(char *, char *);
+char **stringToWordCh(char *, char);
 
 /* errorFunctions.c */
-void _eputs(char *);
-int _eputchar(char);
-int _putfd(char c, int fd);
-int _putsfd(char *st, int fd);
+void _put(char *);
+int _putC(char);
+int _putF(char c, int fd);
+int _putFD(char *st, int fd);
 
 /* inOutputFunctions.c */
 char *get_history_file(info_Pass *info);

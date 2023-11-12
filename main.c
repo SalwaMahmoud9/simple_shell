@@ -26,11 +26,11 @@ int main(int ac, char **av)
 				exit(126);
 			if (errno == ENOENT)
 			{
-				_eputs(av[0]);
-				_eputs(": 0: Can't open ");
-				_eputs(av[1]);
-				_eputchar('\n');
-				_eputchar(BUFFER_FLUSH);
+				_put(av[0]);
+				_put(": 0: Can't open ");
+				_put(av[1]);
+				_putC('\n');
+				_putC(BUFFER_FLUSH);
 				exit(127);
 			}
 			return (EXIT_FAILURE);

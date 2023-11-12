@@ -56,7 +56,7 @@ int _stevFunc(info_Pass *passInfo)
 {
 	if (passInfo->arg_C != 3)
 	{
-		_eputs("Incorrect number of arguements\n");
+		_put("Incorrect number of arguements\n");
 		return (1);
 	}
 	if (_stenvFunc(passInfo, passInfo->arg_V[1], passInfo->arg_V[2]))
@@ -75,7 +75,7 @@ int _ustevFunc(info_Pass *passInfo)
 
 	if (passInfo->arg_C == 1)
 	{
-		_eputs("Too few arguements.\n");
+		_put("Too few arguements.\n");
 		return (1);
 	}
 	for (ii = 1; ii <= passInfo->arg_C; ii++)

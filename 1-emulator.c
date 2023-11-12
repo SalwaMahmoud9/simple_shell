@@ -80,7 +80,7 @@ int _changeDirFunc(info_Pass *passInfo)
 	if (chd == -1)
 	{
 		p_err(passInfo, "can't cd to ");
-		_eputs(passInfo->arg_V[1]), _eputchar('\n');
+		_put(passInfo->arg_V[1]), _putC('\n');
 	}
 	else
 	{

@@ -25,13 +25,13 @@ void del_comm(char *buff)
  */
 void p_err(info_Pass *passInfo, char *ch)
 {
-	_eputs(passInfo->name_F);
-	_eputs(": ");
+	_put(passInfo->name_F);
+	_put(": ");
 	print_var(passInfo->error_C, STDERR_FILENO);
-	_eputs(": ");
-	_eputs(passInfo->arg_V[0]);
-	_eputs(": ");
-	_eputs(ch);
+	_put(": ");
+	_put(passInfo->arg_V[0]);
+	_put(": ");
+	_put(ch);
 }
 
 /**
@@ -47,7 +47,7 @@ int print_var(int in, int t)
 	unsigned int _abs_, curr;
 
 	if (t == STDERR_FILENO)
-		__putchar = _eputchar;
+		__putchar = _putC;
 	if (in < 0)
 	{
 		_abs_ = -in;
