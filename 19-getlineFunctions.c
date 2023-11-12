@@ -33,7 +33,7 @@ ssize_t input_buf(info_Pass *info, char **buf, size_t *len)
 			}
 			info->flag_C = 1;
 			del_comm(*buf);
-			build_history_list(info, *buf, info->his_C++);
+			add_hist(info, *buf, info->his_C++);
 			/* if (_strchr(*buf, ';')) is this a command chain? */
 			{
 				*len = r;

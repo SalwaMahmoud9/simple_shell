@@ -38,7 +38,7 @@ int main(int ac, char **av)
 		info->fd_R = fd;
 	}
 	popenvFunc(info);
-	read_history(info);
+	hist_r(info);
 	hsh(info, av);
 	return (EXIT_SUCCESS);
 }

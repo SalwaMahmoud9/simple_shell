@@ -178,11 +178,11 @@ int _putF(char c, int fd);
 int _putFD(char *st, int fd);
 
 /* inOutputFunctions.c */
-char *get_history_file(info_Pass *info);
-int write_history(info_Pass *info);
-int read_history(info_Pass *info);
-int build_history_list(info_Pass *info, char *buf, int linecount);
-int renumber_history(info_Pass *info);
+char *hist_f(info_Pass *info);
+int hist_w(info_Pass *info);
+int hist_r(info_Pass *info);
+int add_hist(info_Pass *info, char *buf, int linecount);
+int re_hist(info_Pass *info);
 
 /* pathFunctions.c */
 int is_cmd(info_Pass *, char *);

@@ -1,143 +1,140 @@
 #include "shell.h"
 
 /**
- * get_history_file - gets the history file
- * @info: parameter struct
- *
- * Return: allocated string containg history file
+ * hist_w - hist_w
+ * @passInfo: var
+ * Return: int
  */
-
-char *get_history_file(info_Pass *info)
+int hist_w(info_Pass *passInfo)
 {
-	char *buf, *dir;
+	char *fn = hist_f(passInfo);
+	list_String *n = NULL;
+	ssize_t f;
 
-	dir = _getevFunc(info, "HOME=");
-	if (!dir)
-		return (NULL);
-	buf = malloc(sizeof(char) * (_lengthstring(dir) + _lengthstring(HISTORY_F) + 2));
-	if (!buf)
-		return (NULL);
-	buf[0] = 0;
-	_stringcopy(buf, dir);
-	_stringcat(buf, "/");
-	_stringcat(buf, HISTORY_F);
-	return (buf);
-}
-
-/**
- * write_history - creates a file, or appends to an existing file
- * @info: the parameter struct
- *
- * Return: 1 on success, else -1
- */
-int write_history(info_Pass *info)
-{
-	ssize_t fd;
-	char *filename = get_history_file(info);
-	list_String *node = NULL;
-
-	if (!filename)
+	if (!fn)
 		return (-1);
 
-	fd = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0644);
-	free(filename);
-	if (fd == -1)
+	f = open(fn, O_CREAT | O_TRUNC | O_RDWR, 0644);
+	free(fn);
+	if (f == -1)
 		return (-1);
-	for (node = info->his_T; node; node = node->nx)
+	for (n = passInfo->his_T; n; n = n->nx)
 	{
-		_putFD(node->st, fd);
-		_putF('\n', fd);
+		_putFD(n->st, f);
+		_putF('\n', f);
 	}
-	_putF(BUFFER_FLUSH, fd);
-	close(fd);
+	_putF(BUFFER_FLUSH, f);
+	close(f);
 	return (1);
 }
 
 /**
- * read_history - reads history from file
- * @info: the parameter struct
- *
- * Return: histcount on success, 0 otherwise
+ * add_hist - add_hist
+ * @passInfo: var
+ * @b: var
+ * @lc: var
+ * Return: int
  */
-int read_history(info_Pass *info)
+int add_hist(info_Pass *passInfo, char *b, int lc)
 {
-	int i, last = 0, linecount = 0;
-	ssize_t fd, rdlen, fsize = 0;
-	struct stat st;
-	char *buf = NULL, *filename = get_history_file(info);
+	list_String *n = NULL;
 
-	if (!filename)
-		return (0);
+	if (passInfo->his_T)
+		n = passInfo->his_T;
+	plus_e_node(&n, b, lc);
 
-	fd = open(filename, O_RDONLY);
-	free(filename);
-	if (fd == -1)
-		return (0);
-	if (!fstat(fd, &st))
-		fsize = st.st_size;
-	if (fsize < 2)
-		return (0);
-	buf = malloc(sizeof(char) * (fsize + 1));
-	if (!buf)
-		return (0);
-	rdlen = read(fd, buf, fsize);
-	buf[fsize] = 0;
-	if (rdlen <= 0)
-		return (free(buf), 0);
-	close(fd);
-	for (i = 0; i < fsize; i++)
-		if (buf[i] == '\n')
-		{
-			buf[i] = 0;
-			build_history_list(info, buf + last, linecount++);
-			last = i + 1;
-		}
-	if (last != i)
-		build_history_list(info, buf + last, linecount++);
-	free(buf);
-	info->his_C = linecount;
-	while (info->his_C-- >= HISTORY_M)
-		d_node_i(&(info->his_T), 0);
-	renumber_history(info);
-	return (info->his_C);
-}
-
-/**
- * build_history_list - adds entry to a history linked list
- * @info: Structure containing potential arguments. Used to maintain
- * @buf: buffer
- * @linecount: the history linecount, histcount
- *
- * Return: Always 0
- */
-int build_history_list(info_Pass *info, char *buf, int linecount)
-{
-	list_String *node = NULL;
-
-	if (info->his_T)
-		node = info->his_T;
-	plus_e_node(&node, buf, linecount);
-
-	if (!info->his_T)
-		info->his_T = node;
+	if (!passInfo->his_T)
+		passInfo->his_T = n;
 	return (0);
 }
 
 /**
- * renumber_history - renumbers the history linked list after changes
- * @info: Structure containing potential arguments. Used to maintain
- *
- * Return: the new histcount
+ * hist_r - hist_r
+ * @passInfo: var
+ * Return: int
  */
-int renumber_history(info_Pass *info)
+int hist_r(info_Pass *passInfo)
 {
-	list_String *node = info->his_T;
-	int i = 0;
+	struct stat st;
+	int ii, lt = 0;
+	int lc = 0;
+	char *b = NULL;
+	char *fn = hist_f(passInfo);
+	ssize_t f, len, fz = 0;
 
-	while (node)
+	if (!fn)
+		return (0);
+
+	f = open(fn, O_RDONLY);
+	free(fn);
+	if (f == -1)
+		return (0);
+	if (!fstat(f, &st))
+		fz = st.st_size;
+	if (fz < 2)
+		return (0);
+	b = malloc(sizeof(char) * (fz + 1));
+	if (!b)
+		return (0);
+	len = read(f, b, fz);
+	b[fz] = 0;
+	if (len <= 0)
+		return (free(b), 0);
+	close(f);
+	for (ii = 0; ii < fz; ii++)
+		if (b[ii] == '\n')
+		{
+			b[ii] = 0;
+			add_hist(passInfo, b + lt, lc++);
+			lt = ii + 1;
+		}
+	if (lt != ii)
+		add_hist(passInfo, b + lt, lc++);
+	free(b);
+	passInfo->his_C = lc;
+	while (passInfo->his_C-- >= HISTORY_M)
+		d_node_i(&(passInfo->his_T), 0);
+	re_hist(passInfo);
+	return (passInfo->his_C);
+}
+
+/**
+ * re_hist - re_hist
+ * @passInfo: var
+ * Return: int
+ */
+int re_hist(info_Pass *passInfo)
+{
+	list_String *n = passInfo->his_T;
+	int ii = 0;
+
+	while (n)
 	{
-		node->no = i++;
-		node = node->nx;
+		n->no = ii++;
+		n = n->nx;
 	}
-	return (info->his_C = i);
+	return (passInfo->his_C = ii);
+}
+
+/**
+ * hist_f - hist_f
+ * @passInfo: var
+ * Return: char
+ */
+
+char *hist_f(info_Pass *passInfo)
+{
+	char *b, *d;
+
+	d = _getevFunc(passInfo, "HOME=");
+	if (!d)
+		return (NULL);
+	b = malloc(sizeof(char) * (_lengthstring(d) + _lengthstring(HISTORY_F) + 2));
+	if (!b)
+		return (NULL);
+	b[0] = 0;
+	_stringcopy(b, d);
+	_stringcat(b, "/");
+	_stringcat(b, HISTORY_F);
+	return (b);
 }

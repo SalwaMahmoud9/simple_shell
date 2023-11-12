@@ -30,7 +30,7 @@ int hsh(info_Pass *info, char **av)
 			_putchar('\n');
 		free_info(info, 0);
 	}
-	write_history(info);
+	hist_w(info);
 	free_info(info, 1);
 	if (!active(info) && info->sta_S)
 		exit(info->sta_S);
