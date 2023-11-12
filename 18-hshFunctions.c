@@ -1,60 +1,92 @@
 #include "shell.h"
 
 /**
- * hsh - main shell loop
- * @info: the parameter & return info struct
- * @av: the argument vector from main()
- *
- * Return: 0 on success, 1 on error, or error code
+ * get_fork_cmd - get_fork_cmd
+ * @passInfo: var
+ * Return: void
  */
-int hsh(info_Pass *info, char **av)
+void get_fork_cmd(info_Pass *passInfo)
 {
-	ssize_t r = 0;
-	int builtin_ret = 0;
+	pid_t chPid;
 
-	while (r != -1 && builtin_ret != -2)
+	chPid = fork();
+	if (chPid == -1)
 	{
-		clear_info(info);
-		if (active(info))
-			_puts("$ ");
-		_putC(BUFFER_FLUSH);
-		r = get_input(info);
-		if (r != -1)
+		perror("Error:");
+		return;
+	}
+	if (chPid == 0)
+	{
+		if (execve(passInfo->string_P, passInfo->arg_V, getenvFunc(passInfo)) == -1)
 		{
-			set_info(info, av);
-			builtin_ret = find_builtin(info);
-			if (builtin_ret == -1)
-				find_cmd(info);
+			freeInfo(passInfo, 1);
+			if (errno == EACCES)
+				exit(126);
+			exit(1);
 		}
-		else if (active(info))
-			_putchar('\n');
-		free_info(info, 0);
 	}
-	hist_w(info);
-	free_info(info, 1);
-	if (!active(info) && info->sta_S)
-		exit(info->sta_S);
-	if (builtin_ret == -2)
+	else
 	{
-		if (info->error_N == -1)
-			exit(info->sta_S);
-		exit(info->error_N);
+		wait(&(passInfo->sta_S));
+		if (WIFEXITED(passInfo->sta_S))
+		{
+			passInfo->sta_S = WEXITSTATUS(passInfo->sta_S);
+			if (passInfo->sta_S == 126)
+				p_err(passInfo, "Permission denied\n");
+		}
 	}
-	return (builtin_ret);
 }
 
 /**
- * find_builtin - finds a builtinString command
- * @info: the parameter & return info struct
- *
- * Return: -1 if builtinString not found,
- *			0 if builtinString executed successfully,
- *			1 if builtinString found but not successful,
- *			-2 if builtinString signals exit()
+ * hsh - hsh
+ * @passInfo: var
+ * @av: var
+ * Return: int
  */
-int find_builtin(info_Pass *info)
+int hsh(info_Pass *passInfo, char **av)
 {
-	int i, built_in_ret = -1;
+	ssize_t sizeR = 0;
+	int ret = 0;
+
+	while (sizeR != -1 && ret != -2)
+	{
+		clearInfo(passInfo);
+		if (active(passInfo))
+			_puts("$ ");
+		_putC(BUFFER_FLUSH);
+		sizeR = get_it(passInfo);
+		if (sizeR != -1)
+		{
+			setInfo(passInfo, av);
+			ret = get_build_in(passInfo);
+			if (ret == -1)
+				get_cmd(passInfo);
+		}
+		else if (active(passInfo))
+			_putchar('\n');
+		freeInfo(passInfo, 0);
+	}
+	hist_w(passInfo);
+	freeInfo(passInfo, 1);
+	if (!active(passInfo) && passInfo->sta_S)
+		exit(passInfo->sta_S);
+	if (ret == -2)
+	{
+		if (passInfo->error_N == -1)
+			exit(passInfo->sta_S);
+		exit(passInfo->error_N);
+	}
+	return (ret);
+}
+
+/**
+ * get_build_in - get_build_in
+ * @passInfo: var
+ * Return: int
+ */
+int get_build_in(info_Pass *passInfo)
+{
+	int ii, ret = -1;
 	builtin_String builtintbl[] = {
 		{"exit", _exitFunc},
 		{"env", _envFunc},
@@ -67,94 +99,53 @@ int find_builtin(info_Pass *info)
 		{NULL, NULL}
 	};
 
-	for (i = 0; builtintbl[i].strType; i++)
-		if (_comparestring(info->arg_V[0], builtintbl[i].strType) == 0)
+	for (ii = 0; builtintbl[ii].strType; ii++)
+		if (_comparestring(passInfo->arg_V[0], builtintbl[ii].strType) == 0)
 		{
-			info->error_C++;
-			built_in_ret = builtintbl[i].f(info);
+			passInfo->error_C++;
+			ret = builtintbl[ii].f(passInfo);
 			break;
 		}
-	return (built_in_ret);
+	return (ret);
 }
 
 /**
- * find_cmd - finds a command in PATH
- * @info: the parameter & return info struct
- *
+ * get_cmd - get_cmd
+ * @passInfo: var
  * Return: void
  */
-void find_cmd(info_Pass *info)
+void get_cmd(info_Pass *passInfo)
 {
-	char *path = NULL;
-	int i, k;
+	char *p = NULL;
+	int ii, k;
 
-	info->string_P = info->arg_V[0];
-	if (info->flag_C == 1)
+	passInfo->string_P = passInfo->arg_V[0];
+	if (passInfo->flag_C == 1)
 	{
-		info->error_C++;
-		info->flag_C = 0;
+		passInfo->error_C++;
+		passInfo->flag_C = 0;
 	}
-	for (i = 0, k = 0; info->arg_G[i]; i++)
-		if (!check_del(info->arg_G[i], " \t\n"))
+	for (ii = 0, k = 0; passInfo->arg_G[ii]; ii++)
+		if (!check_del(passInfo->arg_G[ii], " \t\n"))
 			k++;
 	if (!k)
 		return;
 
-	path = find_path(info, _getevFunc(info, "PATH="), info->arg_V[0]);
-	if (path)
+	p = get_path(passInfo, _getevFunc(passInfo, "PATH="), passInfo->arg_V[0]);
+	if (p)
 	{
-		info->string_P = path;
-		fork_cmd(info);
+		passInfo->string_P = p;
+		get_fork_cmd(passInfo);
 	}
 	else
 	{
-		if ((active(info) || _getevFunc(info, "PATH=")
-			|| info->arg_V[0][0] == '/') && is_cmd(info, info->arg_V[0]))
-			fork_cmd(info);
-		else if (*(info->arg_G) != '\n')
+		if ((active(passInfo) || _getevFunc(passInfo, "PATH=")
+			|| passInfo->arg_V[0][0] == '/') && cmmd_check(passInfo, passInfo->arg_V[0]))
+			get_fork_cmd(passInfo);
+		else if (*(passInfo->arg_G) != '\n')
 		{
-			info->sta_S = 127;
-			p_err(info, "not found\n");
-		}
-	}
-}
-
-/**
- * fork_cmd - forks a an exec thread to run cmd
- * @info: the parameter & return info struct
- *
- * Return: void
- */
-void fork_cmd(info_Pass *info)
-{
-	pid_t child_pid;
-
-	child_pid = fork();
-	if (child_pid == -1)
-	{
-		/* TODO: PUT ERROR FUNCTION */
-		perror("Error:");
-		return;
-	}
-	if (child_pid == 0)
-	{
-		if (execve(info->string_P, info->arg_V, getenvFunc(info)) == -1)
-		{
-			free_info(info, 1);
-			if (errno == EACCES)
-				exit(126);
-			exit(1);
-		}
-		/* TODO: PUT ERROR FUNCTION */
-	}
-	else
-	{
-		wait(&(info->sta_S));
-		if (WIFEXITED(info->sta_S))
-		{
-			info->sta_S = WEXITSTATUS(info->sta_S);
-			if (info->sta_S == 126)
-				p_err(info, "Permission denied\n");
+			passInfo->sta_S = 127;
+			p_err(passInfo, "not found\n");
 		}
 	}
 }

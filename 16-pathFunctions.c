@@ -1,86 +1,83 @@
 #include "shell.h"
 
 /**
- * is_cmd - determines if a file is an executable command
- * @info: the info struct
- * @path: path to the file
- *
- * Return: 1 if true, 0 otherwise
+ * dupplicate_ch - dupplicate_ch
+ * @stringPath: var
+ * @x: var
+ * @y: var
+ * Return: char
  */
-int is_cmd(info_Pass *info, char *path)
+char *dupplicate_ch(char *stringPath, int x, int y)
 {
-	struct stat st;
+	static char b[1024];
+	int ii = 0, k = 0;
 
-	(void)info;
-	if (!path || stat(path, &st))
-		return (0);
-
-	if (st.st_mode & S_IFREG)
-	{
-		return (1);
-	}
-	return (0);
+	for (k = 0, ii = x; ii < y; ii++)
+		if (stringPath[ii] != ':')
+			b[k++] = stringPath[ii];
+	b[k] = 0;
+	return (b);
 }
 
 /**
- * dup_chars - duplicates characters
- * @pathstr: the PATH string
- * @start: starting index
- * @stop: stopping index
- *
- * Return: pointer to new buffer
+ * get_path - get_path
+ * @passInfo: var
+ * @stringPath: var
+ * @cmd: var
+ * Return: char
  */
-char *dup_chars(char *pathstr, int start, int stop)
+char *get_path(info_Pass *passInfo, char *stringPath, char *cmd)
 {
-	static char buf[1024];
-	int i = 0, k = 0;
+	int ii = 0, cp = 0;
+	char *p;
 
-	for (k = 0, i = start; i < stop; i++)
-		if (pathstr[i] != ':')
-			buf[k++] = pathstr[i];
-	buf[k] = 0;
-	return (buf);
-}
-
-/**
- * find_path - finds this cmd in the PATH string
- * @info: the info struct
- * @pathstr: the PATH string
- * @cmd: the cmd to find
- *
- * Return: full path of cmd if found or NULL
- */
-char *find_path(info_Pass *info, char *pathstr, char *cmd)
-{
-	int i = 0, curr_pos = 0;
-	char *path;
-
-	if (!pathstr)
+	if (!stringPath)
 		return (NULL);
 	if ((_lengthstring(cmd) > 2) && st_wth(cmd, "./"))
 	{
-		if (is_cmd(info, cmd))
+		if (cmmd_check(passInfo, cmd))
 			return (cmd);
 	}
 	while (1)
 	{
-		if (!pathstr[i] || pathstr[i] == ':')
+		if (!stringPath[ii] || stringPath[ii] == ':')
 		{
-			path = dup_chars(pathstr, curr_pos, i);
-			if (!*path)
-				_stringcat(path, cmd);
+			p = dupplicate_ch(stringPath, cp, ii);
+			if (!*p)
+				_stringcat(p, cmd);
 			else
 			{
-				_stringcat(path, "/");
-				_stringcat(path, cmd);
+				_stringcat(p, "/");
+				_stringcat(p, cmd);
 			}
-			if (is_cmd(info, path))
-				return (path);
-			if (!pathstr[i])
+			if (cmmd_check(passInfo, p))
+				return (p);
+			if (!stringPath[ii])
 				break;
-			curr_pos = i;
+			cp = ii;
 		}
-		i++;
+		ii++;
 	}
 	return (NULL);
+}
+
+/**
+ * cmmd_check - cmmd_check
+ * @passInfo: var
+ * @p: var
+ * Return: int
+ */
+int cmmd_check(info_Pass *passInfo, char *p)
+{
+	struct stat s;
+
+	(void)passInfo;
+	if (!p || stat(p, &s))
+		return (0);
+
+	if (s.st_mode & S_IFREG)
+	{
+		return (1);
+	}
+	return (0);
 }

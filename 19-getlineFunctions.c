@@ -1,168 +1,162 @@
 #include "shell.h"
 
 /**
- * input_buf - buffers chained commands
- * @info: parameter struct
- * @buf: address of buffer
- * @len: address of len var
- *
- * Return: bytes read
+ * set_buffer - set_buffer
+ * @passInfo: var
+ * @b: var
+ * @l: var
+ * Return: ssize_t
  */
-ssize_t input_buf(info_Pass *info, char **buf, size_t *len)
+ssize_t set_buffer(info_Pass *passInfo, char **b, size_t *l)
 {
+	size_t l_p = 0;
 	ssize_t r = 0;
-	size_t len_p = 0;
 
-	if (!*len) /* if nothing left in the buffer, fill it */
+	if (!*l) 
 	{
-		/*bfree((void **)info->cm_B);*/
-		free(*buf);
-		*buf = NULL;
-		signal(SIGINT, sigintHandler);
+		free(*b);
+		*b = NULL;
+		signal(SIGINT, loginHdl);
 #if GET_LINE
-		r = getline(buf, &len_p, stdin);
+		x = getline(b, &l_p, stdin);
 #else
-		r = _getline(info, buf, &len_p);
+		x = _getline(passInfo, b, &l_p);
 #endif
-		if (r > 0)
+		if (x > 0)
 		{
-			if ((*buf)[r - 1] == '\n')
+			if ((*b)[x - 1] == '\n')
 			{
-				(*buf)[r - 1] = '\0'; /* remove trailing newline */
-				r--;
+				(*b)[x - 1] = '\0'; /* remove trailing newline */
+				x--;
 			}
-			info->flag_C = 1;
-			del_comm(*buf);
-			add_hist(info, *buf, info->his_C++);
-			/* if (_strchr(*buf, ';')) is this a command chain? */
+			passInfo->flag_C = 1;
+			del_comm(*b);
+			add_hist(passInfo, *b, passInfo->his_C++);
+			/* if (_strchr(*b, ';')) is this a command chain? */
 			{
-				*len = r;
-				info->cm_B = buf;
+				*l = x;
+				passInfo->cm_B = b;
 			}
 		}
 	}
-	return (r);
+	return (x);
 }
 
 /**
- * get_input - gets a line minus the newline
- * @info: parameter struct
- *
- * Return: bytes read
+ * get_it - get_it
+ * @passInfo: var
+ * Return: ssize_t
  */
-ssize_t get_input(info_Pass *info)
+ssize_t get_it(info_Pass *passInfo)
 {
-	static char *buf; /* the ';' command chain buffer */
-	static size_t i, j, len;
-	ssize_t r = 0;
-	char **buf_p = &(info->arg_G), *p;
+	static char *b;
+	static size_t ii, j, l;
+	ssize_t x = 0;
+	char **buf_p = &(passInfo->arg_G), *p;
 
 	_putchar(BUFFER_FLUSH);
-	r = input_buf(info, &buf, &len);
-	if (r == -1) /* EOF */
+	x = set_buffer(passInfo, &b, &l);
+	if (x == -1)
 		return (-1);
-	if (len)	/* we have commands left in the chain buffer */
+	if (l)
 	{
-		j = i; /* init new iterator to current buf position */
-		p = buf + i; /* get pointer for return */
+		j = ii;
+		p = b + ii;
 
-		chChain(info, buf, &j, i, len);
-		while (j < len) /* iterate to semicolon or end */
+		chChain(passInfo, b, &j, ii, l);
+		while (j < l)
 		{
-			if (iChain(info, buf, &j))
+			if (iChain(passInfo, b, &j))
 				break;
 			j++;
 		}
 
-		i = j + 1; /* increment past nulled ';'' */
-		if (i >= len) /* reached end of buffer? */
+		ii = j + 1; 
+		if (ii >= l)
 		{
-			i = len = 0; /* reset position and length */
-			info->cm_BT = COMMAND_N;
+			ii = l = 0;
+			passInfo->cm_BT = COMMAND_N;
 		}
 
-		*buf_p = p; /* pass back pointer to current command position */
-		return (_lengthstring(p)); /* return length of current command */
+		*buf_p = p;
+		return (_lengthstring(p));
 	}
 
-	*buf_p = buf; /* else not a chain, pass back buffer from _getline() */
-	return (r); /* return length of buffer from _getline() */
+	*buf_p = b;
+	return (x);
 }
 
 /**
- * read_buf - reads a buffer
- * @info: parameter struct
- * @buf: buffer
- * @i: size
- *
- * Return: r
+ * readb - readb
+ * @passInfo: var
+ * @b: var
+ * @ii: var
+ * Return: ssize_t
  */
-ssize_t read_buf(info_Pass *info, char *buf, size_t *i)
+ssize_t readb(info_Pass *passInfo, char *b, size_t *ii)
 {
-	ssize_t r = 0;
+	ssize_t x = 0;
 
-	if (*i)
+	if (*ii)
 		return (0);
-	r = read(info->fd_R, buf, R_BUFFER_S);
+	r = read(passInfo->fd_R, b, R_BUFFER_S);
 	if (r >= 0)
-		*i = r;
+		*ii = r;
 	return (r);
 }
 
 /**
- * _getline - gets the next line of input from STDIN
- * @info: parameter struct
- * @ptr: address of pointer to buffer, preallocated or NULL
- * @length: size of preallocated ptr buffer if not NULL
- *
- * Return: s
+ * _getline - _getline
+ * @passInfo: var
+ * @pr: var
+ * @lth: var
+ * Return: int
  */
-int _getline(info_Pass *info, char **ptr, size_t *length)
+int _getline(info_Pass *passInfo, char **pr, size_t *lth)
 {
-	static char buf[R_BUFFER_S];
-	static size_t i, len;
+	static char b[R_BUFFER_S];
 	size_t k;
 	ssize_t r = 0, s = 0;
+	static size_t ii, l;
 	char *p = NULL, *new_p = NULL, *c;
 
-	p = *ptr;
-	if (p && length)
-		s = *length;
-	if (i == len)
-		i = len = 0;
+	p = *pr;
+	if (p && lth)
+		s = *lth;
+	if (ii == l)
+		ii = l = 0;
 
-	r = read_buf(info, buf, &len);
-	if (r == -1 || (r == 0 && len == 0))
+	r = readb(passInfo, b, &l);
+	if (r == -1 || (r == 0 && l == 0))
 		return (-1);
 
-	c = _strchr(buf + i, '\n');
-	k = c ? 1 + (unsigned int)(c - buf) : len;
+	c = _strchr(b + ii, '\n');
+	k = c ? 1 + (unsigned int)(c - b) : l;
 	new_p = _relocation(p, s, s ? s + k : k + 1);
 	if (!new_p) /* MALLOC FAILURE! */
 		return (p ? free(p), -1 : -1);
 
 	if (s)
-		_strncat(new_p, buf + i, k - i);
+		_strncat(new_p, b + ii, k - ii);
 	else
-		_stringcpy(new_p, buf + i, k - i + 1);
+		_stringcpy(new_p, b + ii, k - ii + 1);
 
-	s += k - i;
-	i = k;
+	s += k - ii;
+	ii = k;
 	p = new_p;
 
-	if (length)
-		*length = s;
-	*ptr = p;
+	if (lth)
+		*lth = s;
+	*pr = p;
 	return (s);
 }
 
 /**
- * sigintHandler - blocks ctrl-C
- * @sig_num: the signal number
- *
+ * loginHdl - loginHdl
+ * @sn: var
  * Return: void
  */
-void sigintHandler(__attribute__((unused))int sig_num)
+void loginHdl(__attribute__((unused))int sn)
 {
 	_puts("\n");
 	_puts("$ ");

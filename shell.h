@@ -104,40 +104,43 @@ typedef struct builtinString
 } builtin_String;
 
 /* emulator.c */
-int _exitFunc(info_Pass *);
+int _aliasFunc(info_Pass *);
 int _changeDirFunc(info_Pass *);
+int _exitFunc(info_Pass *);
 int _helpFunc(info_Pass *);
 int _historyFunc(info_Pass *);
-int _aliasFunc(info_Pass *);
+
+
 
 /* myenv.c */
-char *_getevFunc(info_Pass *, const char *);
+int popenvFunc(info_Pass *);
 int _envFunc(info_Pass *);
 int _stevFunc(info_Pass *);
-int _ustevFunc(info_Pass *);
-int popenvFunc(info_Pass *);
-char **getenvFunc(info_Pass *);
 int _unenvFunc(info_Pass *, char *);
 int _stenvFunc(info_Pass *, char *, char *);
+int _ustevFunc(info_Pass *);
+char *_getevFunc(info_Pass *, const char *);
+char **getenvFunc(info_Pass *);
 
 /* chain.c */
-int iChain(info_Pass *, char *, size_t *);
 void chChain(info_Pass *, char *, size_t *, size_t, size_t);
-int reAlias(info_Pass *);
 int reVar(info_Pass *);
 int reStr(char **, char *);
+int reAlias(info_Pass *);
+int iChain(info_Pass *, char *, size_t *);
+
 
 /* listString.c */
-list_String *plus_node(list_String **, const char *, int);
-list_String *plus_e_node(list_String **, const char *, int);
+size_t getListLength(const list_String *);
+size_t p_list(const list_String *);
 size_t p_list_string(const list_String *);
+char **list_strs(list_String *);
+ssize_t node_index(list_String *, list_String *);
 int d_node_i(list_String **, unsigned int);
 void free_mylist(list_String **);
-size_t getListLength(const list_String *);
-char **list_strs(list_String *);
-size_t p_list(const list_String *);
+list_String *plus_e_node(list_String **, const char *, int);
+list_String *plus_node(list_String **, const char *, int);
 list_String *start_node(list_String *, char *, char);
-ssize_t node_index(list_String *, list_String *);
 
 /* genFunctions.c */
 int active(info_Pass *);
@@ -145,64 +148,67 @@ int check_del(char, char *);
 int _alpha(int);
 int _atoi(char *);
 int _atoierror(char *);
-void p_err(info_Pass *, char *);
 int print_var(int, int);
-char *change_num(long int, int, int);
+void p_err(info_Pass *, char *);
 void del_comm(char *);
+char *change_num(long int, int, int);
+
 
 /* memoFunctions */
-char *_setmemory(char *, char, unsigned int);
-void freePointer(char **);
 void *_relocation(void *, unsigned int, unsigned int);
+void freePointer(char **);
+char *_setmemory(char *, char, unsigned int);
 int bfree(void **);
+
 
 /* strFunctions.c */
 int _lengthstring(char *);
 int _comparestring(char *, char *);
-char *st_wth(const char *, const char *);
-char *_stringcat(char *, char *);
+int _putchar(char);
 char *_stringcopy(char *, char *);
 char *_stringduplicate(const char *);
-void _puts(char *);
-int _putchar(char);
-char *_stringcpy(char *, char *, int);
+char *st_wth(const char *, const char *);
+char *_stringcat(char *, char *);
 char *_strncat(char *, char *, int);
 char *_strchr(char *, char);
 char **stringToWord(char *, char *);
 char **stringToWordCh(char *, char);
+char *_stringcpy(char *, char *, int);
+void _puts(char *);
+
 
 /* errorFunctions.c */
-void _put(char *);
-int _putC(char);
-int _putF(char c, int fd);
 int _putFD(char *st, int fd);
+int _putF(char c, int fd);
+int _putC(char);
+void _put(char *);
 
 /* inOutputFunctions.c */
-char *hist_f(info_Pass *info);
+int add_hist(info_Pass *info, char *buf, int linecount);
 int hist_w(info_Pass *info);
 int hist_r(info_Pass *info);
-int add_hist(info_Pass *info, char *buf, int linecount);
 int re_hist(info_Pass *info);
+char *hist_f(info_Pass *info);
 
 /* pathFunctions.c */
-int is_cmd(info_Pass *, char *);
-char *dup_chars(char *, int, int);
-char *find_path(info_Pass *, char *, char *);
+char *dupplicate_ch(char *, int, int);
+char *get_path(info_Pass *, char *, char *);
+int cmmd_check(info_Pass *, char *);
 
 /* infoFunctions.c */
-void clear_info(info_Pass *);
-void set_info(info_Pass *, char **);
-void free_info(info_Pass *, int);
+void setInfo(info_Pass *, char **);
+void freeInfo(info_Pass *, int);
+void clearInfo(info_Pass *);
 
 /* hshFunctions.c */
+void get_cmd(info_Pass *);
+void get_fork_cmd(info_Pass *);
+int get_build_in(info_Pass *);
 int hsh(info_Pass *, char **);
-int find_builtin(info_Pass *);
-void find_cmd(info_Pass *);
-void fork_cmd(info_Pass *);
 
 /* getlineFunctions.c */
-ssize_t get_input(info_Pass *);
+ssize_t get_it(info_Pass *);
+void loginHdl(int);
 int _getline(info_Pass *, char **, size_t *);
-void sigintHandler(int);
 
 #endif
