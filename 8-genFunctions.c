@@ -81,7 +81,7 @@ int _atoierror(char *ch)
 {
 	unsigned long int res = 0;
 	int ii = 0;
-	
+
 	if (*ch == '+')
 		ch++;
 	for (ii = 0;  ch[ii] != '\0'; ii++)

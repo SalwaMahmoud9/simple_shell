@@ -12,7 +12,7 @@ ssize_t set_buffer(info_Pass *passInfo, char **b, size_t *l)
 	size_t l_p = 0;
 	ssize_t x = 0;
 
-	if (!*l) 
+	if (!*l)
 	{
 		free(*b);
 		*b = NULL;
@@ -71,7 +71,7 @@ ssize_t get_it(info_Pass *passInfo)
 			j++;
 		}
 
-		ii = j + 1; 
+		ii = j + 1;
 		if (ii >= l)
 		{
 			ii = l = 0;

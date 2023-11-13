@@ -56,11 +56,9 @@ int add_hist(info_Pass *passInfo, char *b, int lc)
 int hist_r(info_Pass *passInfo)
 {
 	struct stat st;
-	int ii, lt = 0;
-	int lc = 0;
-	char *b = NULL;
-	char *fn = hist_f(passInfo);
+	int lc = 0, ii, lt = 0;
 	ssize_t f, len, fz = 0;
+	char *b = NULL, *fn = hist_f(passInfo);
 
 	if (!fn)
 		return (0);

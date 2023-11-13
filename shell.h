@@ -82,8 +82,8 @@ typedef struct infoPass
 	char **environ;
 	int env_C;
 	int sta_S;
-	char **cm_B; 
-	int cm_BT; 
+	char **cm_B;
+	int cm_BT;
 	int fd_R;
 	int his_C;
 } info_Pass;
