@@ -140,7 +140,7 @@ void get_cmd(info_Pass *passInfo)
 	else
 	{
 		if ((active(passInfo) || _getevFunc(passInfo, "PATH=")
-			|| passInfo->arg_V[0][0] == '/') 
+			|| passInfo->arg_V[0][0] == '/')
 			&& cmmd_check(passInfo, passInfo->arg_V[0]))
 			get_fork_cmd(passInfo);
 		else if (*(passInfo->arg_G) != '\n')
