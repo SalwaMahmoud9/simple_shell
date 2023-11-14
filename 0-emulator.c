@@ -1,5 +1,4 @@
 #include "shell.h"
-
 /**
  * _exitFunc - exitFunc
  * @passInfo: info_Pass
