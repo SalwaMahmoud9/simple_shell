@@ -1,6 +1,5 @@
 #include "shell.h"
 
-
 /**
  * main - main entry point
  * @c: count
