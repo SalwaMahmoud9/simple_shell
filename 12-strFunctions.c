@@ -1,4 +1,5 @@
 #include "shell.h"
+
 /**
  **_strchr - _strchr
  *@xs: var
