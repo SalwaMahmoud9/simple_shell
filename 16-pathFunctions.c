@@ -1,6 +1,5 @@
 #include "shell.h"
 
-
 /**
  * dupplicate_ch - dupplicate_ch
  * @stringPath: var
