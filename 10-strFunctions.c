@@ -1,6 +1,5 @@
 #include "shell.h"
 
-
 /**
  * _stringcat - _stringcat
  * @x: var
