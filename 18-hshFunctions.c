@@ -1,6 +1,5 @@
 #include "shell.h"
 
-
 /**
  * get_fork_cmd - get_fork_cmd
  * @passInfo: var
