@@ -4,7 +4,7 @@
  * _putF - _putF
  * @ch: var
  * @f: var
- * Return : int
+ * Return: int
  */
 int _putF(char ch, int f)
 {
