@@ -7,7 +7,7 @@
  */
 int _exitFunc(info_Pass *passInfo)
 {
-	int exitVar;
+	int exitVar, returnCheck = -2, returnCheck1 = 1;
 
 	if (passInfo->arg_V[1])
 	{
@@ -18,13 +18,13 @@ int _exitFunc(info_Pass *passInfo)
 			p_err(passInfo, "error number: ");
 			_put(passInfo->arg_V[1]);
 			_putC('\n');
-			return (1);
+			return (returnCheck1);
 		}
 		passInfo->error_N = _atoierror(passInfo->arg_V[1]);
-		return (-2);
+		return (returnCheck);
 	}
 	passInfo->error_N = -1;
-	return (-2);
+	return (returnCheck);
 }
 
 /**
@@ -35,12 +35,13 @@ int _exitFunc(info_Pass *passInfo)
 int _helpFunc(info_Pass *passInfo)
 {
 	char **var_arr;
+	int valueZero = 0;
 
 	var_arr = passInfo->arg_V;
 	_puts("help \n");
-	if (0)
+	if (valueZero)
 		_puts(*var_arr);
-	return (0);
+	return (valueZero);
 }
 
 /**
@@ -50,6 +51,8 @@ int _helpFunc(info_Pass *passInfo)
  */
 int _historyFunc(info_Pass *passInfo)
 {
+	int valueZero = 0;
+
 	p_list(passInfo->his_T);
-	return (0);
+	return (valueZero);
 }
