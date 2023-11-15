@@ -22,8 +22,6 @@ int main(int c, char **v)
 		fileD = open(v[y], O_RDONLY);
 		if (fileD == u)
 		{
-			if (errno == EACCES)
-				exit(126);
 			if (errno == ENOENT)
 			{
 				_put(v[x]);
@@ -32,6 +30,10 @@ int main(int c, char **v)
 				_putC('\n');
 				_putC(BUFFER_FLUSH);
 				exit(127);
+			}
+			if (errno == EACCES)
+			{
+				exit(126);
 			}
 			return (EXIT_FAILURE);
 		}
