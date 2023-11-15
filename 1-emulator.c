@@ -1,6 +1,49 @@
 #include "shell.h"
 
 /**
+ * unAliasFunc - unAliasFunc
+ * @passInfo: info_Pass
+ * @ch: char
+ * Return: int
+ */
+int unAliasFunc(info_Pass *passInfo, char *ch)
+{
+	char *x;
+	char y;
+	int rn;
+
+	x = _strchr(ch, '=');
+	if (!x)
+		return (1);
+	y = *x;
+	*x = 0;
+	rn = d_node_i(&(passInfo->al_AI),
+		node_index(passInfo->al_AI, start_node(passInfo->al_AI, ch, -1)));
+	*x = y;
+	return (rn);
+}
+
+/**
+ * sAliasFunc - sAliasFunc
+ * @passInfo: info_Pass
+ * @ch: char
+ * Return: int
+ */
+int sAliasFunc(info_Pass *passInfo, char *ch)
+{
+	char *x;
+
+	x = _strchr(ch, '=');
+	if (!x)
+		return (1);
+	if (!*++x)
+		return (unAliasFunc(passInfo, ch));
+
+	unAliasFunc(passInfo, ch);
+	return (plus_e_node(&(passInfo->al_AI), ch, 0) == NULL);
+}
+
+/**
  * _changeDirFunc - _changeDirFunc
  * @passInfo: info_Pass
  * Return: int
